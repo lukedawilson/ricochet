@@ -49,25 +49,23 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\linux\x64\libopenal.so.1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="lib\linux\x64\libSDL2-2.0.so.0">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="lib\linux\x86\libopenal.so.1">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="lib\linux\x86\libSDL2-2.0.so.0">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="lib\linux\x64\libopenal.so.1" />
+    <Content Include="lib\linux\x64\libSDL2-2.0.so.0" />
+    <Content Include="lib\linux\x86\libopenal.so.1" />
+    <Content Include="lib\linux\x86\libSDL2-2.0.so.0" />
+    <Content Include="lib\windows\x64\SDL2.dll" />
+    <Content Include="lib\windows\x86\SDL2.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-         Other similar extension points exist, see Microsoft.Common.targets.
-    <Target Name="BeforeBuild">
-    </Target>
-    <Target Name="AfterBuild">
-    </Target>
-    -->
+  <!-- add osx steps here -->
+  <Target Name="AfterBuild" Condition="$(OS) == 'Windows_NT'">
+    <Copy SourceFiles="lib\windows\x86\SDL2.dll" DestinationFolder="bin\$(Configuration)\x86" />
+    <Copy SourceFiles="lib\windows\x64\SDL2.dll" DestinationFolder="bin\$(Configuration)\x64" />
+  </Target>
+  <Target Name="AfterBuild" Condition="$(OS) == 'Unix'">
+    <Copy SourceFiles="lib\linux\x86\libopenal.so.1" DestinationFolder="bin\$(Configuration)\x86" />
+    <Copy SourceFiles="lib\linux\x86\libSDL2-2.0.so.0" DestinationFolder="bin\$(Configuration)\x86" />
+    <Copy SourceFiles="lib\linux\x64\libopenal.so.1" DestinationFolder="bin\$(Configuration)\x64" />
+    <Copy SourceFiles="lib\linux\x64\libSDL2-2.0.so.0" DestinationFolder="bin\$(Configuration)\x64" />
+  </Target>
 </Project>
