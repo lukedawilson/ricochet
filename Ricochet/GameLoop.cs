@@ -51,7 +51,7 @@ namespace Ricochet
         {
             if (IsKeyDown(Keys.Escape))
             {
-                Exit();
+                //Exit();
             }
             else if (IsKeyDown(Keys.Right))
             {
