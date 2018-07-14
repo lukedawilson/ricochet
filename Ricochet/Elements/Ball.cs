@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Ricochet
+namespace Ricochet.Elements
 {
     /// <summary>
     /// Class to keep track of a ball's location and vector.
@@ -76,6 +76,8 @@ namespace Ricochet
 
         private void UpdateBallPosition()
         {
+            // ToDo: find intersecting tiles; for each intersecting tile, apply x/y change
+
             // Move the ball's center
             _x += _changeX;
             _y += _changeY;

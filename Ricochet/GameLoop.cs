@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Ricochet.Elements;
+using Ricochet.Levels;
 
 namespace Ricochet
 {
@@ -9,21 +11,20 @@ namespace Ricochet
     /// </summary>
     public class GameLoop : Game
     {
-        private const int ScreenWidth = 700;
-        private const int ScreenHeight = 500;
-
         private const double Gravity = 1;
 
         private const int BallRadius = 25;
 
         private SpriteBatch _spriteBatch;
+
+        private LevelBase _currentLevel;
         private Ball _ball;
 
         public GameLoop()
         {
             var manager = new GraphicsDeviceManager(this);
-            manager.PreferredBackBufferWidth = ScreenWidth;
-            manager.PreferredBackBufferHeight = ScreenHeight;
+            manager.PreferredBackBufferWidth = Screen.Width * Tile.TileDimension;
+            manager.PreferredBackBufferHeight = Screen.Height * Tile.TileDimension;
 
             Content.RootDirectory = "Content";
         }
@@ -37,7 +38,9 @@ namespace Ricochet
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _ball = new Ball(GraphicsDevice, _spriteBatch, ScreenWidth, ScreenHeight, BallRadius, Gravity);
+
+            _ball = new Ball(GraphicsDevice, _spriteBatch, Screen.Width * Tile.TileDimension, Screen.Height * Tile.TileDimension, BallRadius, Gravity);
+            _currentLevel = new Level1(GraphicsDevice, _spriteBatch);
         }
 
         protected override void UnloadContent()
@@ -70,6 +73,7 @@ namespace Ricochet
         {
             GraphicsDevice.Clear(Color.Black);
             _ball.Draw();
+            _currentLevel.Draw();
             base.Draw(gameTime);
         }
 
