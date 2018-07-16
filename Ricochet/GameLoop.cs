@@ -38,9 +38,9 @@ namespace Ricochet
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            _ball = new Ball(GraphicsDevice, _spriteBatch, Screen.Width * Tile.TileDimension, Screen.Height * Tile.TileDimension, BallRadius, Gravity);
+            
             _currentLevel = new Level1(GraphicsDevice, _spriteBatch);
+            _ball = new Ball(_currentLevel.CurrentScreen, GraphicsDevice, _spriteBatch, Screen.Width * Tile.TileDimension, Screen.Height * Tile.TileDimension, BallRadius, Gravity);
         }
 
         protected override void UnloadContent()
@@ -72,8 +72,8 @@ namespace Ricochet
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            _ball.Draw();
             _currentLevel.Draw();
+            _ball.Draw();
             base.Draw(gameTime);
         }
 

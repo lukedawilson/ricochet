@@ -38,5 +38,7 @@ namespace Ricochet.Elements
             _spriteBatch.Draw(_texture, _position, null, Color.White);
             _spriteBatch.End();
         }
+
+        public Rectangle Boundary => _position;
     }
 }

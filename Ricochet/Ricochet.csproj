@@ -49,6 +49,7 @@
     <Compile Include="Levels\LevelBase.cs" />
     <Compile Include="Levels\Level1.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Shapes\Circle.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, PublicKeyToken=null">
@@ -119,11 +120,10 @@
     <Content Include="lib\windows\x86\SDL2.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="AfterBuild" >
+  <Target Name="AfterBuild">
     <!-- Windows -->
     <Copy Condition=" '$(Configuration)' == 'Debug (Windows)' or '$(Configuration)' == 'Release (Windows)' " SourceFiles="lib\windows\x86\SDL2.dll" DestinationFolder="bin\$(Configuration)\x86" />
     <Copy Condition=" '$(Configuration)' == 'Debug (Windows)' or '$(Configuration)' == 'Release (Windows)' " SourceFiles="lib\windows\x64\SDL2.dll" DestinationFolder="bin\$(Configuration)\x64" />
-
     <!-- Linux -->
     <Copy Condition=" '$(Configuration)' == 'Debug (Linux)' or '$(Configuration)' == 'Release (Linux)' " SourceFiles="lib\linux\x86\libopenal.so.1" DestinationFolder="bin\$(Configuration)\x86" />
     <Copy Condition=" '$(Configuration)' == 'Debug (Linux)' or '$(Configuration)' == 'Release (Linux)' " SourceFiles="lib\linux\x86\libSDL2-2.0.so.0" DestinationFolder="bin\$(Configuration)\x86" />

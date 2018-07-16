@@ -1,4 +1,7 @@
-﻿namespace Ricochet.Elements
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Ricochet.Elements
 {
     public class Screen
     {
@@ -11,6 +14,8 @@
         {
             _tiles[tile.X, tile.Y] = tile;
         }
+
+        public IReadOnlyCollection<Tile> Tiles => _tiles.Cast<Tile>().Where(tile => tile != null).ToArray();
 
         public void Draw()
         {

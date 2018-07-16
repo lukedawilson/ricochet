@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Ricochet.Shapes;
 
 namespace Ricochet.Elements
 {
@@ -13,6 +15,7 @@ namespace Ricochet.Elements
         private const double ChangeX = 0.5;
         private const double ChangeY = 2.0;
 
+        private readonly Screen _currentScreen;
         private readonly GraphicsDevice _graphicsDevice;
         private readonly SpriteBatch _spriteBatch;
 
@@ -26,12 +29,16 @@ namespace Ricochet.Elements
         private double _y;
         private double _changeX;
         private double _changeY;
+
+        private Circle _boundary;
         
         public Ball(
+            Screen currentScreen,
             GraphicsDevice graphicsDevice, SpriteBatch spriteBatch,
             int screenWidth, int screenHeight, int ballRadius,
             double gravity)
         {
+            _currentScreen = currentScreen;
             _graphicsDevice = graphicsDevice;
             _spriteBatch = spriteBatch;
             _screenWidth = screenWidth;
@@ -40,7 +47,7 @@ namespace Ricochet.Elements
             _gravity = gravity;
 
             _x = _screenWidth / 2.0;
-            _y = _screenWidth / 2.0;
+            _y = 0;
         }
 
         public void MoveRight()
@@ -76,13 +83,43 @@ namespace Ricochet.Elements
 
         private void UpdateBallPosition()
         {
-            // ToDo: find intersecting tiles; for each intersecting tile, apply x/y change
-
             // Move the ball's center
             _x += _changeX;
             _y += _changeY;
+            _boundary = new Circle(_x, _y, _ballRadius);
+
+            // Apply collision logic to tiles
+            // ToDo: handle shapes other than squares
+            var intersectingTiles = _currentScreen.Tiles.Where(tile => _boundary.Intersects(tile.Boundary)).ToArray();
+            foreach (var tile in intersectingTiles)
+            {
+                var oldX = _x - _changeX;
+                var oldY = _y - _changeY;
+
+                if (oldX < tile.Boundary.Left && oldX < tile.Boundary.Right && oldY > tile.Boundary.Top && oldY < tile.Boundary.Bottom) // hit left of square
+                {
+                    _changeX *= -BounceRate;
+                    _x = tile.Boundary.Left - _ballRadius;
+                }
+                else if (oldX > tile.Boundary.Right && oldX > tile.Boundary.Right && oldY > tile.Boundary.Top && oldY < tile.Boundary.Bottom) // hit right of square
+                {
+                    _changeX *= -BounceRate;
+                    _x = tile.Boundary.Right + _ballRadius;
+                }
+
+                if (oldY < tile.Boundary.Top && oldY < tile.Boundary.Bottom && oldX > tile.Boundary.Left && oldX < tile.Boundary.Right) // hit top of square
+                {
+                    _changeY *= -BounceRate;
+                    _y = tile.Boundary.Top - _ballRadius;
+                }
+                else if (oldY > tile.Boundary.Bottom && oldY > tile.Boundary.Top && oldX > tile.Boundary.Left && oldX < tile.Boundary.Right) // hit bottom of square
+                {
+                    _changeY *= -BounceRate;
+                    _y = tile.Boundary.Bottom + _ballRadius;
+                }
+            }
             
-            // Bounce the ball if needed, and keep in bounds
+            // Apply collision logic to edges of screen
             if (_y > _screenHeight - _ballRadius || _y < _ballRadius)
             {
                 _changeY *= -BounceRate;
