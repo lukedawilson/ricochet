@@ -12,24 +12,34 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release (Linux)|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <OutputPath>bin\Release (Linux)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug (Linux)|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <OutputPath>bin\Debug (Linux)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release (Linux)|AnyCPU' ">
+    <OutputPath>bin\Release (Linux)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug (Linux)|AnyCPU' ">
+    <OutputPath>bin\Debug (Linux)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug (Windows)|AnyCPU' ">
+    <OutputPath>bin\Debug (Windows)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release (Windows)|AnyCPU' ">
+    <OutputPath>bin\Release (Windows)\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Elements\Ball.cs" />
@@ -56,49 +66,49 @@
     <Content Include="Content\img\bricks1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\bricks2.png" >
+    <Content Include="Content\img\bricks2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\bricks3.png" >
+    <Content Include="Content\img\bricks3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\bricks4.png" >
+    <Content Include="Content\img\bricks4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\checker1.png" >
+    <Content Include="Content\img\checker1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\checker2.png" >
+    <Content Include="Content\img\checker2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\checker3.png" >
+    <Content Include="Content\img\checker3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\checker4.png" >
+    <Content Include="Content\img\checker4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\enemy_square1.png" >
+    <Content Include="Content\img\enemy_square1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\enemy_square2.png" >
+    <Content Include="Content\img\enemy_square2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\enemy_square3.png" >
+    <Content Include="Content\img\enemy_square3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\pipes1.png" >
+    <Content Include="Content\img\pipes1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\pipes2.png" >
+    <Content Include="Content\img\pipes2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\pipes3.png" >
+    <Content Include="Content\img\pipes3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\pipes4.png" >
+    <Content Include="Content\img\pipes4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\img\pipes5.png" >
+    <Content Include="Content\img\pipes5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="lib\linux\x64\libopenal.so.1" />
@@ -109,15 +119,15 @@
     <Content Include="lib\windows\x86\SDL2.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- add osx steps here -->
-  <Target Name="AfterBuild" Condition="$(OS) == 'Windows_NT'">
-    <Copy SourceFiles="lib\windows\x86\SDL2.dll" DestinationFolder="bin\$(Configuration)\x86" />
-    <Copy SourceFiles="lib\windows\x64\SDL2.dll" DestinationFolder="bin\$(Configuration)\x64" />
-  </Target>
-  <Target Name="AfterBuild" Condition="$(OS) == 'Unix'">
-    <Copy SourceFiles="lib\linux\x86\libopenal.so.1" DestinationFolder="bin\$(Configuration)\x86" />
-    <Copy SourceFiles="lib\linux\x86\libSDL2-2.0.so.0" DestinationFolder="bin\$(Configuration)\x86" />
-    <Copy SourceFiles="lib\linux\x64\libopenal.so.1" DestinationFolder="bin\$(Configuration)\x64" />
-    <Copy SourceFiles="lib\linux\x64\libSDL2-2.0.so.0" DestinationFolder="bin\$(Configuration)\x64" />
+  <Target Name="AfterBuild" >
+    <!-- Windows -->
+    <Copy Condition=" '$(Configuration)' == 'Debug (Windows)' or '$(Configuration)' == 'Release (Windows)' " SourceFiles="lib\windows\x86\SDL2.dll" DestinationFolder="bin\$(Configuration)\x86" />
+    <Copy Condition=" '$(Configuration)' == 'Debug (Windows)' or '$(Configuration)' == 'Release (Windows)' " SourceFiles="lib\windows\x64\SDL2.dll" DestinationFolder="bin\$(Configuration)\x64" />
+
+    <!-- Linux -->
+    <Copy Condition=" '$(Configuration)' == 'Debug (Linux)' or '$(Configuration)' == 'Release (Linux)' " SourceFiles="lib\linux\x86\libopenal.so.1" DestinationFolder="bin\$(Configuration)\x86" />
+    <Copy Condition=" '$(Configuration)' == 'Debug (Linux)' or '$(Configuration)' == 'Release (Linux)' " SourceFiles="lib\linux\x86\libSDL2-2.0.so.0" DestinationFolder="bin\$(Configuration)\x86" />
+    <Copy Condition=" '$(Configuration)' == 'Debug (Linux)' or '$(Configuration)' == 'Release (Linux)' " SourceFiles="lib\linux\x64\libopenal.so.1" DestinationFolder="bin\$(Configuration)\x64" />
+    <Copy Condition=" '$(Configuration)' == 'Debug (Linux)' or '$(Configuration)' == 'Release (Linux)' " SourceFiles="lib\linux\x64\libSDL2-2.0.so.0" DestinationFolder="bin\$(Configuration)\x64" />
   </Target>
 </Project>
