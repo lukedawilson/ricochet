@@ -2,7 +2,7 @@
 {
     public class Screen
     {
-        public const int Width = 12;
+        public const int Width = 13;
         public const int Height = 9;
         
         private readonly Tile[,] _tiles = new Tile[Width, Height]; // (rows, cols)

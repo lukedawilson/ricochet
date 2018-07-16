@@ -1,10 +1,10 @@
 # ricochet
 
-Port of the [classic BBC Master game](https://en.wikipedia.org/wiki/Ricochet_(1989_video_game)).
+Homage to the [classic BBC Micro game](http://bbcmicro.co.uk/game.php?id=949).
 
-## installation details for windows/visual studios
+## Installation details for Windows/Visual Studio
 
-- download visual studios 2017 community, https://visualstudio.microsoft.com/downloads/
-- download monogame 3.6 for visual studios, http://www.monogame.net/2017/03/01/monogame-3-6/
-- download .net framework 4.6.1 if missing, https://www.microsoft.com/net/download/visual-studio-sdks
-- download mono from http://www.mono-project.com/download/stable/#download-win (64-bit and .net)
+- Download [Visual Studio 2017 Community](https://visualstudio.microsoft.com/downloads/)
+- Download [Monogame 3.6 for Visual Studio](http://www.monogame.net/2017/03/01/monogame-3-6/)
+- Download [the .net framework 4.6.1](https://www.microsoft.com/net/download/visual-studio-sdks)
+- Download [mono](http://www.mono-project.com/download/stable/#download-win) (64-bit version and GTK#)
