@@ -4,13 +4,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ricochet", "Ricochet\Ricoch
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Release (Linux)|Any CPU = Release (Linux)|Any CPU
+		Debug (Linux)|Any CPU = Debug (Linux)|Any CPU
+		Debug (Windows)|Any CPU = Debug (Windows)|Any CPU
+		Release (Windows)|Any CPU = Release (Windows)|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{03426E81-E9C6-40ED-9A49-E9C83F45FBC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03426E81-E9C6-40ED-9A49-E9C83F45FBC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03426E81-E9C6-40ED-9A49-E9C83F45FBC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03426E81-E9C6-40ED-9A49-E9C83F45FBC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03426E81-E9C6-40ED-9A49-E9C83F45FBC4}.Release (Linux)|Any CPU.ActiveCfg = Release (Linux)|Any CPU
+		{03426E81-E9C6-40ED-9A49-E9C83F45FBC4}.Release (Linux)|Any CPU.Build.0 = Release (Linux)|Any CPU
+		{03426E81-E9C6-40ED-9A49-E9C83F45FBC4}.Debug (Linux)|Any CPU.ActiveCfg = Debug (Linux)|Any CPU
+		{03426E81-E9C6-40ED-9A49-E9C83F45FBC4}.Debug (Linux)|Any CPU.Build.0 = Debug (Linux)|Any CPU
+		{03426E81-E9C6-40ED-9A49-E9C83F45FBC4}.Debug (Windows)|Any CPU.ActiveCfg = Debug (Windows)|Any CPU
+		{03426E81-E9C6-40ED-9A49-E9C83F45FBC4}.Debug (Windows)|Any CPU.Build.0 = Debug (Windows)|Any CPU
+		{03426E81-E9C6-40ED-9A49-E9C83F45FBC4}.Release (Windows)|Any CPU.ActiveCfg = Release (Windows)|Any CPU
+		{03426E81-E9C6-40ED-9A49-E9C83F45FBC4}.Release (Windows)|Any CPU.Build.0 = Release (Windows)|Any CPU
 	EndGlobalSection
 EndGlobal
