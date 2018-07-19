@@ -61,6 +61,10 @@ namespace Ricochet
             {
                 _ball.MoveLeft();
             }
+//            else if (IsKeyDown(Keys.Down)) // for testing purposes
+//            {
+//                _ball.MoveDown();
+//            }
             else if (IsKeyDown(Keys.Up))
             {
                 _ball.Bounce();

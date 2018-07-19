@@ -60,6 +60,11 @@ namespace Ricochet.Elements
             _changeX -= ChangeX;
         }
 
+//        public void MoveDown() // for testing purposes
+//        {
+//            _changeY += ChangeY;
+//        }
+
         public void Bounce()
         {
             _changeY -= ChangeY;
@@ -96,23 +101,23 @@ namespace Ricochet.Elements
                 var oldX = _x - _changeX;
                 var oldY = _y - _changeY;
 
-                if (oldX < tile.Boundary.Left && oldX < tile.Boundary.Right && oldY > tile.Boundary.Top && oldY < tile.Boundary.Bottom) // hit left of square
+                if (oldX <= tile.Boundary.Left && oldX <= tile.Boundary.Right && oldY >= tile.Boundary.Top && oldY <= tile.Boundary.Bottom) // hit left of square
                 {
                     _changeX *= -BounceRate;
                     _x = tile.Boundary.Left - _ballRadius;
                 }
-                else if (oldX > tile.Boundary.Right && oldX > tile.Boundary.Right && oldY > tile.Boundary.Top && oldY < tile.Boundary.Bottom) // hit right of square
+                else if (oldX >= tile.Boundary.Right && oldX >= tile.Boundary.Right && oldY >= tile.Boundary.Top && oldY <= tile.Boundary.Bottom) // hit right of square
                 {
                     _changeX *= -BounceRate;
                     _x = tile.Boundary.Right + _ballRadius;
                 }
 
-                if (oldY < tile.Boundary.Top && oldY < tile.Boundary.Bottom && oldX > tile.Boundary.Left && oldX < tile.Boundary.Right) // hit top of square
+                if (oldY <= tile.Boundary.Top && oldY <= tile.Boundary.Bottom && oldX >= tile.Boundary.Left && oldX <= tile.Boundary.Right) // hit top of square
                 {
                     _changeY *= -BounceRate;
                     _y = tile.Boundary.Top - _ballRadius;
                 }
-                else if (oldY > tile.Boundary.Bottom && oldY > tile.Boundary.Top && oldX > tile.Boundary.Left && oldX < tile.Boundary.Right) // hit bottom of square
+                else if (oldY >= tile.Boundary.Bottom && oldY >= tile.Boundary.Top && oldX >= tile.Boundary.Left && oldX <= tile.Boundary.Right) // hit bottom of square
                 {
                     _changeY *= -BounceRate;
                     _y = tile.Boundary.Bottom + _ballRadius;
@@ -120,16 +125,26 @@ namespace Ricochet.Elements
             }
             
             // Apply collision logic to edges of screen
-            if (_y > _screenHeight - _ballRadius || _y < _ballRadius)
+            if (_y >= _screenHeight - _ballRadius)
             {
                 _changeY *= -BounceRate;
-                _y = Math.Max(Math.Min(_screenHeight - _ballRadius, _y), _ballRadius);
+                _y = _screenHeight - _ballRadius;
 
             }
-            if (_x > _screenWidth - _ballRadius || _x < _ballRadius)
+            else if (_y <= _ballRadius)
+            {
+                _changeY *= -BounceRate;
+                _y = _ballRadius;
+            }
+            if (_x >= _screenWidth - _ballRadius)
             {
                 _changeX *= -BounceRate;
-                _x = Math.Max(Math.Min(_screenWidth - _ballRadius, _x), _ballRadius);
+                _x = _screenWidth - _ballRadius;
+            }
+            else if (_x <= _ballRadius)
+            {
+                _changeX *= -BounceRate;
+                _x = _ballRadius;
             }
             
             // Apply gravity
