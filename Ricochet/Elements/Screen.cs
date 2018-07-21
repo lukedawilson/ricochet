@@ -24,7 +24,5 @@ namespace Ricochet.Elements
                 tile?.Draw();
             }
         }
-
-        // ToDo: return list of tiles, for ball physics
     }
 }
