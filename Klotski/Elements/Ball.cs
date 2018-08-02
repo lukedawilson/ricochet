@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
+using Klotski.Shapes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Ricochet.Shapes;
 
-namespace Ricochet.Elements
+namespace Klotski.Elements
 {
     /// <summary>
     /// Class to keep track of a ball's location and vector.
@@ -16,8 +16,6 @@ namespace Ricochet.Elements
         private const double ChangeY = 2.0;
 
         private readonly Screen _currentScreen;
-        private readonly GraphicsDevice _graphicsDevice;
-        private readonly SpriteBatch _spriteBatch;
 
         private readonly int _screenWidth;
         private readonly int _screenHeight;
@@ -34,13 +32,10 @@ namespace Ricochet.Elements
         
         public Ball(
             Screen currentScreen,
-            GraphicsDevice graphicsDevice, SpriteBatch spriteBatch,
             int screenWidth, int screenHeight, int ballRadius,
             double gravity)
         {
             _currentScreen = currentScreen;
-            _graphicsDevice = graphicsDevice;
-            _spriteBatch = spriteBatch;
             _screenWidth = screenWidth;
             _screenHeight = screenHeight;
             _ballRadius = ballRadius;
@@ -78,12 +73,12 @@ namespace Ricochet.Elements
 
             var diameter = _ballRadius * 2;
             var colorData = Circle(diameter, Color.Red, Color.Transparent);
-            var texture = new Texture2D(_graphicsDevice, diameter, diameter);
+            var texture = new Texture2D(GameLoopBase.GraphicsDevice, diameter, diameter);
             texture.SetData(colorData);
             
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(texture, position, null, Color.White);
-            _spriteBatch.End();
+            GameLoopBase.SpriteBatch.Begin();
+            GameLoopBase.SpriteBatch.Draw(texture, position, null, Color.White);
+            GameLoopBase.SpriteBatch.End();
         }
 
         private void UpdateBallPosition()

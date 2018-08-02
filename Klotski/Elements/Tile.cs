@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Ricochet.Elements
+namespace Klotski.Elements
 {
     public class Tile
     {
@@ -10,18 +10,14 @@ namespace Ricochet.Elements
 
         public const int TileDimension = 100;
 
-        private readonly SpriteBatch _spriteBatch;
         private readonly Texture2D _texture;
         private readonly Rectangle _position;
 
         public Tile(
-            GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, int x, int y,
-            string image)
+            int x, int y, string image)
         {
             X = x;
             Y = y;
-
-            _spriteBatch = spriteBatch;
 
             var yFromTop = Screen.Height - 1 - y;
             var rawY = yFromTop * TileDimension;
@@ -29,14 +25,14 @@ namespace Ricochet.Elements
 
             _position = new Rectangle(rawX, rawY, TileDimension, TileDimension);
             using (var stream = TitleContainer.OpenStream($"Content/img/{image}")) // ToDo: this should be done using a `Content.mgcb` file, but I couldn't get it to work
-                _texture = Texture2D.FromStream(graphicsDevice, stream);
+                _texture = Texture2D.FromStream(GameLoopBase.GraphicsDevice, stream);
         }
 
         public void Draw()
         {
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(_texture, _position, null, Color.White);
-            _spriteBatch.End();
+            GameLoopBase.SpriteBatch.Begin();
+            GameLoopBase.SpriteBatch.Draw(_texture, _position, null, Color.White);
+            GameLoopBase.SpriteBatch.End();
         }
 
         public Rectangle Boundary => _position;

@@ -1,89 +1,53 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Ricochet.Elements;
+﻿using Klotski;
+using Klotski.Elements;
 using Ricochet.Levels;
 
 namespace Ricochet
 {
-    /// <summary>
-    /// This is our main program.
-    /// </summary>
-    public class GameLoop : Game
+    internal class GameLoop : GameLoopBase
     {
         private const double Gravity = 1;
-
         private const int BallRadius = 25;
-
-        private SpriteBatch _spriteBatch;
 
         private LevelBase _currentLevel;
         private Ball _ball;
 
-        public GameLoop()
-        {
-            var manager = new GraphicsDeviceManager(this);
-            manager.PreferredBackBufferWidth = Screen.Width * Tile.TileDimension;
-            manager.PreferredBackBufferHeight = Screen.Height * Tile.TileDimension;
+        public override string Title => "Ricochet";
 
-            Content.RootDirectory = "Content";
+        public override void LoadContent()
+        { 
+            _currentLevel = new Level1();
+            _ball = new Ball(_currentLevel.CurrentScreen, Screen.Width * Tile.TileDimension, Screen.Height * Tile.TileDimension, BallRadius, Gravity);
         }
 
-        protected override void Initialize()
-        {
-            Window.Title = "Bouncing Balls";
-            base.Initialize();
-        }
-
-        protected override void LoadContent()
-        {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-            _currentLevel = new Level1(GraphicsDevice, _spriteBatch);
-            _ball = new Ball(_currentLevel.CurrentScreen, GraphicsDevice, _spriteBatch, Screen.Width * Tile.TileDimension, Screen.Height * Tile.TileDimension, BallRadius, Gravity);
-        }
-
-        protected override void UnloadContent()
+        public override void UnloadContent()
         {
         }
 
-        protected override void Update(GameTime gameTime)
+        public override void Update()
         {
-            if (IsKeyDown(Keys.Escape))
-            {
-                Exit();
-            }
-            else if (IsKeyDown(Keys.Right))
+            if (IsRightArrowDown())
             {
                 _ball.MoveRight();
             }
-            else if (IsKeyDown(Keys.Left))
+            else if (IsLeftArrowDown())
             {
                 _ball.MoveLeft();
             }
-//            else if (IsKeyDown(Keys.Down)) // for testing purposes
-//            {
-//                _ball.MoveDown();
-//            }
-            else if (IsKeyDown(Keys.Up))
+            else if (IsUpArrowDown())
             {
                 _ball.Bounce();
             }
-
-            base.Update(gameTime);
+            else if (IsEscDown())
+            {
+                Exit();
+            }
         }
 
-        protected override void Draw(GameTime gameTime)
+        public override void Draw()
         {
-            GraphicsDevice.Clear(Color.Black);
             _currentLevel.Draw();
             _ball.Draw();
-            base.Draw(gameTime);
-        }
-
-        private static bool IsKeyDown(Keys key)
-        {
-            return Keyboard.GetState().IsKeyDown(key);
         }
     }
 }

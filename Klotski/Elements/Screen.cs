@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Ricochet.Elements
+namespace Klotski.Elements
 {
     public class Screen
     {

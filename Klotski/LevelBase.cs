@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Ricochet.Elements;
+using Klotski.Elements;
 
-namespace Ricochet.Levels
+namespace Klotski
 {
     public abstract class LevelBase
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 
-namespace Ricochet.Shapes
+namespace Klotski.Shapes
 {
     public struct Circle
     {
