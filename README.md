@@ -2,6 +2,12 @@
 
 Homage to the [classic BBC Micro game](http://bbcmicro.co.uk/game.php?id=949).
 
+## Klotski
+
+Klotski is a micro-framework sitting on top of monogame, supporting the easy creation of tile-based 2D platform games. It is named after a Polish sliding-tile puzzle. The framework is still in development alongside Ricochet.
+    
+Ricochet-specific logic should go in the Ricochet project, whereas game physics and general mechanics should go in Klotski. The Ricochet project should not need to reference monogame.
+
 ## Installation details for Windows/Visual Studio
 
 - Download [Visual Studio 2017 Community](https://visualstudio.microsoft.com/downloads/)
