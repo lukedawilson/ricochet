@@ -1,0 +1,80 @@
+40 pixel sprites
+
+solid background tiles
+bricks x4 - done
+checker x4 - done
+pipes x5 - done
+plus_pipes x5 - done
+rock x5 - done
+4stone x5 - done
+5stone
+
+unsolid background things
+pillar
+light
+grass_sand
+crater
+
+to help move tiles
+rope
+chain x4 - done
+ladder x5 - done
+ladder_h x5 - done
+
+interactive background things
+barb
+door
+object_mat
+
+objects to pick up
+key
+hour_glass
+drill
+
+enemies
+enemy_square x3 - done
+enemy_bulb x4 - done
+enemy_spaceman
+enemy_bug
+
+
+
+80 pixel sprites
+
+solid background tiles
+bricks x4 - done
+checker x4
+pipes x5
+plus_pipes
+rock
+4stone
+5stone
+
+unsolid background things
+pillar
+light
+grass/sand
+crater
+
+to help move tiles
+rope
+chain x4
+ladder x5
+ladder_h x5 
+
+interactive background things
+barb
+door
+object_mat
+
+objects to pick up
+key
+hour_glass
+drill
+
+
+enemies
+enemy_square x3
+enemy_bulb x4
+enemy_spaceman
+enemy_bug
