@@ -1,4 +1,4 @@
-# ricochet
+# Ricochet
 
 Homage to the [classic BBC Micro game](http://bbcmicro.co.uk/game.php?id=949).
 
