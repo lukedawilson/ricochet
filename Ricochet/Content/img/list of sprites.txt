@@ -7,11 +7,11 @@ pipes x5 - done
 plus_pipes x5 - done
 rock x5 - done
 4stone x5 - done
-5stone
+5stone x5 done
 
 unsolid background things
-pillar
-light
+pillar b,m,t x5 - done
+lamp x6 - done
 grass_sand
 crater
 
