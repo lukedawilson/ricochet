@@ -12,8 +12,10 @@ rock x5 - done
 unsolid background things
 pillar b,m,t x5 - done
 lamp x6 - done
-grass_sand
-crater
+sand_low x5 - done
+sand_high x5 - done
+sand_crater r and l x 5 - done
+sand_ground x5 - done
 
 to help move tiles
 rope
@@ -30,6 +32,8 @@ objects to pick up
 key
 hour_glass
 drill
+cherry
+ice_cream
 
 enemies
 enemy_square x3 - done
