@@ -18,13 +18,14 @@ sand_crater r and l x 5 - done
 sand_ground x5 - done
 
 to help move tiles
-rope
+rope x5 - done
+rope_b x5 - done
 chain x4 - done
 ladder x5 - done
 ladder_h x5 - done
 
 interactive background things
-barb
+barb x6 - done
 door
 object_mat
 
@@ -40,6 +41,7 @@ enemy_square x3 - done
 enemy_bulb x4 - done
 enemy_spaceman
 enemy_bug
+enemy_squid
 
 
 
@@ -61,7 +63,8 @@ grass/sand
 crater
 
 to help move tiles
-rope
+rope x5 
+rope_b x5 
 chain x4
 ladder x5
 ladder_h x5 
@@ -82,3 +85,4 @@ enemy_square x3
 enemy_bulb x4
 enemy_spaceman
 enemy_bug
+enemy_squid
