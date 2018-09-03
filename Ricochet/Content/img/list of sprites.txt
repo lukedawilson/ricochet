@@ -26,7 +26,7 @@ ladder_h x5 - done
 
 interactive background things
 barb x6 - done
-door
+door x6 - done
 object_mat
 
 objects to pick up
