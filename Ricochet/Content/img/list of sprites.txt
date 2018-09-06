@@ -27,13 +27,13 @@ ladder_h x5 - done
 interactive background things
 barb x6 - done
 door x6 - done
-object_mat
+object_mat x6 - done
 
 objects to pick up
-key
-hour_glass
+key x6 - done
+hour_glass x6 - done
 drill
-cherry
+cherry x6 - done
 ice_cream
 
 enemies
