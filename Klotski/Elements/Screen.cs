@@ -8,14 +8,14 @@ namespace Klotski.Elements
         public const int Width = 13;
         public const int Height = 9;
         
-        private readonly Tile[,] _tiles = new Tile[Width, Height]; // (rows, cols)
+        private readonly SquareTile[,] _tiles = new SquareTile[Width, Height]; // (rows, cols)
 
-        public void AddTile(Tile tile)
+        public void AddTile(SquareTile tile)
         {
             _tiles[tile.X, tile.Y] = tile;
         }
 
-        public IReadOnlyCollection<Tile> Tiles => _tiles.Cast<Tile>().Where(tile => tile != null).ToArray();
+        public IReadOnlyCollection<SquareTile> Tiles => _tiles.Cast<SquareTile>().Where(tile => tile != null).ToArray();
 
         public void Draw()
         {

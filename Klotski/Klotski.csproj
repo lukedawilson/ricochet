@@ -38,9 +38,10 @@
   <ItemGroup>
     <Compile Include="Elements\Ball.cs" />
     <Compile Include="Elements\Screen.cs" />
-    <Compile Include="Elements\Tile.cs" />
+    <Compile Include="Elements\SquareTile.cs" />
     <Compile Include="GameLoopBase.cs" />
     <Compile Include="GameLoopWrapper.cs" />
+    <Compile Include="Helpers\Geometry.cs" />
     <Compile Include="LevelBase.cs" />
     <Compile Include="Shapes\Circle.cs" />
   </ItemGroup>

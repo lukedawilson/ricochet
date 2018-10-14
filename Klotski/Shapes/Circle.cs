@@ -1,5 +1,6 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
+using Klotski.Helpers;
+using Point = Microsoft.Xna.Framework.Point;
 
 namespace Klotski.Shapes
 {
@@ -16,19 +17,11 @@ namespace Klotski.Shapes
             _radius = radius;
         }
 
-        public bool Intersects(Rectangle rectangle)
+        public bool Intersects(Line[] sides)
         {
-            var sides = new[]
-            {
-                new[] { new Point(rectangle.Right, rectangle.Top), new Point(rectangle.Right, rectangle.Bottom) }, // right
-                new[] { new Point(rectangle.Left, rectangle.Top), new Point(rectangle.Left, rectangle.Bottom) }, // left
-                new[] { new Point(rectangle.Left, rectangle.Top), new Point(rectangle.Right, rectangle.Top) }, // top
-                new[] { new Point(rectangle.Left, rectangle.Bottom), new Point(rectangle.Right, rectangle.Bottom) } // bottom
-            };
-
             foreach (var side in sides)
             {
-                var dist = MinimumDistance(_x, _y, side[0].X, side[0].Y, side[1].X, side[1].Y);
+                var dist = MinimumDistance(_x, _y, side.X1, side.Y1, side.X2, side.Y2);
                 if (dist <= _radius)
                 {
                     return true;

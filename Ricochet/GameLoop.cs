@@ -17,7 +17,7 @@ namespace Ricochet
         public override void LoadContent()
         { 
             _currentLevel = new Level1();
-            _ball = new Ball(_currentLevel.CurrentScreen, Screen.Width * Tile.TileDimension, Screen.Height * Tile.TileDimension, BallRadius, Gravity);
+            _ball = new Ball(_currentLevel.CurrentScreen, Screen.Width * SquareTile.TileDimension, Screen.Height * SquareTile.TileDimension, BallRadius, Gravity);
         }
 
         public override void UnloadContent()
@@ -37,6 +37,10 @@ namespace Ricochet
             else if (IsUpArrowDown())
             {
                 _ball.Bounce();
+            }
+            else if (IsDownArrowDown())
+            {
+                _ball.MoveDown();
             }
             else if (IsEscDown())
             {
