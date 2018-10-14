@@ -31,8 +31,8 @@ namespace Klotski
             _gameLoopWrapper = new GameLoopWrapper(this);
 
             var manager = new GraphicsDeviceManager(_gameLoopWrapper);
-            manager.PreferredBackBufferWidth = Screen.Width  * Tile.TileDimension;
-            manager.PreferredBackBufferHeight = Screen.Height * Tile.TileDimension;
+            manager.PreferredBackBufferWidth = Screen.Width  * SquareTile.TileDimension;
+            manager.PreferredBackBufferHeight = Screen.Height * SquareTile.TileDimension;
         }
 
         public void Run()
@@ -58,6 +58,11 @@ namespace Klotski
         protected static bool IsUpArrowDown()
         {
             return IsKeyDown(Keys.Up);
+        }
+
+        protected static bool IsDownArrowDown()
+        {
+            return IsKeyDown(Keys.Down);
         }
 
         protected static bool IsEscDown()
