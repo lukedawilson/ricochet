@@ -34,7 +34,7 @@ key x6 - done
 hour_glass x6 - done
 drill
 cherry x6 - done
-ice_cream
+ice_cream x6 - done
 
 enemies
 enemy_square x3 - done
