@@ -39,9 +39,13 @@ ice_cream x6 - done
 enemies
 enemy_square x3 - done
 enemy_bulb x4 - done
-enemy_spaceman
-enemy_bug
+enemy_spaceman x12 - done
+enemy_bug x12 - done
 enemy_squid
+
+ricochets
+rico x8
+rico_squash x3
 
 
 
