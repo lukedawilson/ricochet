@@ -17,6 +17,11 @@ sand_high x5 - done
 sand_crater r and l x 5 - done
 sand_ground x5 - done
 
+water tiles
+water x1 - done
+water_top x1 - done
+water_seaweed x1 - done
+
 to help move tiles
 rope x5 - done
 rope_b x5 - done
@@ -41,7 +46,7 @@ enemy_square x3 - done
 enemy_bulb x4 - done
 enemy_spaceman x12 - done
 enemy_bug x12 - done
-enemy_squid
+enemy_squid x2 - done
 
 ricochets
 rico x8
