@@ -49,8 +49,9 @@ enemy_bug x12 - done
 enemy_squid x2 - done
 
 ricochets
-rico x8
-rico_squash x3
+these need to be done in other colours
+rico x8 - done
+rico_squash x3 - done
 
 
 
