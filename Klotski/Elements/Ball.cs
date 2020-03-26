@@ -108,15 +108,36 @@ namespace Klotski.Elements
                     if (intersection == null)
                         continue;
 
-                    collision = true; // ToDo: not working yet
+                    collision = true;
 
-                    var xComponent = GetXComponent(trajectory, wall);
-                    _x = intersection.X - xDirection*_ballRadius;
-                    _changeX *= xComponent * BounceRate;
+                    if (Math.Abs(wall.X1 - wall.X2) < tolerance) // vertical wall
+                    {
+                        if (_x < wall.X1) // ball --> wall
+                        {
+                            _x = wall.X1 - _ballRadius;
+                        }
+                        else // wall <-- ball
+                        {
+                            _x = wall.X1 + _ballRadius;
+                        }
 
-                    var yComponent = GetYComponent(trajectory, wall);
-                    _y = intersection.Y - yDirection*_ballRadius;
-                    _changeY *= yComponent * BounceRate;
+                        _changeX *= -BounceRate;
+                    }
+                    else if (Math.Abs(wall.Y1 - wall.Y2) < tolerance) // horizontal wall
+                    {
+                        if (_y < wall.Y1) // ball ^^ wall
+                        {
+                            _y = wall.Y1 - _ballRadius;
+                        }
+                        else
+                        {
+                            _y = wall.Y1 + _ballRadius;
+                        }
+
+                        _changeY *= -BounceRate;
+                    }
+
+                    // TODO: diagonal walls
                 }
             }
 
