@@ -90,12 +90,10 @@ namespace Klotski.Elements
 
             var potentialX = _x + _changeX;
             var potentialY = _y + _changeY;
-            var potentialBoundary = new Circle(potentialX, potentialY, _ballRadius);
 
             var collision = false;
 
             // Apply collision logic to tiles
-            //var intersectingTiles = _currentScreen.Tiles.Where(tile => potentialBoundary.Intersects(tile.Boundary)).ToArray();
             foreach (var tile in _currentScreen.Tiles)
             {
                 foreach (var wall in tile.Boundary)
@@ -139,13 +137,13 @@ namespace Klotski.Elements
                     // ToDo: set position based on tile boundaries (above/below)
                     else if (wall.Y1 > wall.Y2) // diagonal \
                     {
-                        _changeX *= -BounceRate;
-                        _changeY *= -BounceRate;
+                        _changeX *= -BounceRate * 0.5;
+                        _changeY *= -BounceRate * 0.5;
                     }
                     else if (wall.Y1 < wall.Y2) // diagonal /
                     {
-                        _changeX *= -BounceRate;
-                        _changeY *= -BounceRate;
+                        _changeX *= -BounceRate * 0.5;
+                        _changeY *= -BounceRate * 0.5;
                     }
                 }
             }
