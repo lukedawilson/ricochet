@@ -14,71 +14,90 @@ namespace Ricochet.Levels
 
         public Level1()
         {
-            var screen1 = new Screen();
+            Screens.Add(Screen1());
+            Screens.Add(Screen2());
+
+            // Test different screens by setting this
+            CurrentScreenIndex = 1; // ToDo: link screens together properly
+        }
+
+        private static Screen Screen1()
+        {
+            var screen = new Screen();
 
             // row 1
-            screen1.AddTile(new SquareTile(0, 0, Pipes1));
-            screen1.AddTile(new SquareTile(1, 0, Pipes1));
-            screen1.AddTile(new SquareTile(2, 0, Checker2));
-            screen1.AddTile(new SquareTile(5, 0, Bricks2));
-            screen1.AddTile(new SquareTile(6, 0, Bricks2));
-            screen1.AddTile(new SquareTile(7, 0, Bricks2));
-            screen1.AddTile(new SquareTile(8, 0, Bricks2));
-            screen1.AddTile(new SquareTile(9, 0, Bricks2));
-            screen1.AddTile(new SquareTile(10, 0, Bricks2));
-            screen1.AddTile(new SquareTile(11, 0, Bricks2));
-            screen1.AddTile(new SquareTile(12, 0, Bricks2));
+            screen.AddTile(new SquareTile(0, 0, Pipes1));
+            screen.AddTile(new SquareTile(1, 0, Pipes1));
+            screen.AddTile(new SquareTile(2, 0, Checker2));
+            screen.AddTile(new SquareTile(5, 0, Bricks2));
+            screen.AddTile(new SquareTile(6, 0, Bricks2));
+            screen.AddTile(new SquareTile(7, 0, Bricks2));
+            screen.AddTile(new SquareTile(8, 0, Bricks2));
+            screen.AddTile(new SquareTile(9, 0, Bricks2));
+            screen.AddTile(new SquareTile(10, 0, Bricks2));
+            screen.AddTile(new SquareTile(11, 0, Bricks2));
+            screen.AddTile(new SquareTile(12, 0, Bricks2));
 
             // row 2
-            screen1.AddTile(new SquareTile(0, 1, Checker2));
-            screen1.AddTile(new SquareTile(1, 1, Checker2));
-            screen1.AddTile(new SquareTile(2, 1, Checker2));
-            screen1.AddTile(new BottomRightTriangleTile(8, 1, Bricks2TriangleBottomRight));
-            screen1.AddTile(new SquareTile(9, 1, Bricks2));
-            screen1.AddTile(new SquareTile(10, 1, Bricks2));
-            screen1.AddTile(new SquareTile(11, 1, Bricks2));
-            screen1.AddTile(new SquareTile(12, 1, Bricks2));
+            screen.AddTile(new SquareTile(0, 1, Checker2));
+            screen.AddTile(new SquareTile(1, 1, Checker2));
+            screen.AddTile(new SquareTile(2, 1, Checker2));
+            screen.AddTile(new BottomRightTriangleTile(8, 1, Bricks2TriangleBottomRight));
+            screen.AddTile(new SquareTile(9, 1, Bricks2));
+            screen.AddTile(new SquareTile(10, 1, Bricks2));
+            screen.AddTile(new SquareTile(11, 1, Bricks2));
+            screen.AddTile(new SquareTile(12, 1, Bricks2));
 
             // row 3
-            screen1.AddTile(new SquareTile(2, 2, Checker2));
-            screen1.AddTile(new SquareTile(9, 2, Bricks2));
-            screen1.AddTile(new SquareTile(10, 2, Bricks2));
-            screen1.AddTile(new SquareTile(11, 2, Bricks2));
-            screen1.AddTile(new SquareTile(12, 2, Bricks2));
+            screen.AddTile(new SquareTile(2, 2, Checker2));
+            screen.AddTile(new SquareTile(9, 2, Bricks2));
+            screen.AddTile(new SquareTile(10, 2, Bricks2));
+            screen.AddTile(new SquareTile(11, 2, Bricks2));
+            screen.AddTile(new SquareTile(12, 2, Bricks2));
 
             // row 4
-            screen1.AddTile(new SquareTile(2, 3, Checker2));
-            screen1.AddTile(new SquareTile(3, 3, Checker2));
-            screen1.AddTile(new SquareTile(4, 3, Checker2));
-            screen1.AddTile(new SquareTile(5, 3, Checker2));
-            screen1.AddTile(new SquareTile(6, 3, Checker2));
-            screen1.AddTile(new SquareTile(9, 3, Bricks2));
-            screen1.AddTile(new BottomLeftTriangleTile(10, 3, Bricks2TriangleBottomLeft));
+            screen.AddTile(new SquareTile(2, 3, Checker2));
+            screen.AddTile(new SquareTile(3, 3, Checker2));
+            screen.AddTile(new SquareTile(4, 3, Checker2));
+            screen.AddTile(new SquareTile(5, 3, Checker2));
+            screen.AddTile(new SquareTile(6, 3, Checker2));
+            screen.AddTile(new SquareTile(9, 3, Bricks2));
+            screen.AddTile(new BottomLeftTriangleTile(10, 3, Bricks2TriangleBottomLeft));
 
             // row 7
-            screen1.AddTile(new TopRightTriangleTile(11, 6, Bricks2TriangleTopRight));
-            screen1.AddTile(new SquareTile(12, 6, Bricks2));
+            screen.AddTile(new TopRightTriangleTile(11, 6, Bricks2TriangleTopRight));
+            screen.AddTile(new SquareTile(12, 6, Bricks2));
 
             // row 8
-            screen1.AddTile(new SquareTile(2, 7, Checker2));
-            screen1.AddTile(new TopRightTriangleTile(10, 7, Bricks2TriangleTopRight));
-            screen1.AddTile(new SquareTile(11, 7, Bricks2));
-            screen1.AddTile(new SquareTile(12, 7, Bricks2));
+            screen.AddTile(new SquareTile(2, 7, Checker2));
+            screen.AddTile(new TopRightTriangleTile(10, 7, Bricks2TriangleTopRight));
+            screen.AddTile(new SquareTile(11, 7, Bricks2));
+            screen.AddTile(new SquareTile(12, 7, Bricks2));
 
             // row 9
-            screen1.AddTile(new SquareTile(0, 8, Checker2));
-            screen1.AddTile(new SquareTile(1, 8, Checker2));
-            screen1.AddTile(new SquareTile(2, 8, Pipes1));
-            screen1.AddTile(new SquareTile(3, 8, Checker2));
-            screen1.AddTile(new SquareTile(4, 8, Checker2));
-            screen1.AddTile(new SquareTile(5, 8, Checker2));
-            screen1.AddTile(new SquareTile(8, 8, Bricks2));
-            screen1.AddTile(new SquareTile(9, 8, Bricks2));
-            screen1.AddTile(new SquareTile(10, 8, Bricks2));
-            screen1.AddTile(new SquareTile(11, 8, Bricks2));
-            screen1.AddTile(new SquareTile(12, 8, Bricks2));
+            screen.AddTile(new SquareTile(0, 8, Checker2));
+            screen.AddTile(new SquareTile(1, 8, Checker2));
+            screen.AddTile(new SquareTile(2, 8, Pipes1));
+            screen.AddTile(new SquareTile(3, 8, Checker2));
+            screen.AddTile(new SquareTile(4, 8, Checker2));
+            screen.AddTile(new SquareTile(5, 8, Checker2));
+            screen.AddTile(new SquareTile(8, 8, Bricks2));
+            screen.AddTile(new SquareTile(9, 8, Bricks2));
+            screen.AddTile(new SquareTile(10, 8, Bricks2));
+            screen.AddTile(new SquareTile(11, 8, Bricks2));
+            screen.AddTile(new SquareTile(12, 8, Bricks2));
 
-            Screens.Add(screen1);
+            return screen;
+        }
+
+        private static Screen Screen2()
+        {
+            var screen = new Screen();
+
+            // row 1
+            screen.AddTile(new SquareTile(0, 0, Pipes1));
+
+            return screen;
         }
     }
 }
