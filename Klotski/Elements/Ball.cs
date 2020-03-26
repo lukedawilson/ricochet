@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Klotski.Helpers;
 using Klotski.Shapes;
 using Microsoft.Xna.Framework;
@@ -108,11 +109,11 @@ namespace Klotski.Elements
 
                     if (Math.Abs(wall.X1 - wall.X2) < tolerance) // vertical wall
                     {
-                        if (_x < wall.X1) // ball --> wall
+                        if (_x < wall.X1 && tile.Boundary.All(w => w.X1 >= wall.X1 && w.X2 >= wall.X1)) // ball --> wall
                         {
                             _x = wall.X1 - _ballRadius;
                         }
-                        else // wall <-- ball
+                        else if (tile.Boundary.All(w => w.X1 <= wall.X1 && w.X2 <= wall.X1)) // wall <-- ball
                         {
                             _x = wall.X1 + _ballRadius;
                         }
@@ -121,27 +122,51 @@ namespace Klotski.Elements
                     }
                     else if (Math.Abs(wall.Y1 - wall.Y2) < tolerance) // horizontal wall
                     {
-                        if (_y < wall.Y1) // ball ^^ wall
+                        if (_y < wall.Y1 && tile.Boundary.All(w => w.Y1 >= wall.Y1 && w.Y2 >= wall.Y1)) // ball ^^ wall
                         {
                             _y = wall.Y1 - _ballRadius;
                         }
-                        else
+                        else if (tile.Boundary.All(w => w.Y1 <= wall.Y1 && w.Y2 <= wall.Y1))
                         {
                             _y = wall.Y1 + _ballRadius;
                         }
 
                         _changeY *= -BounceRate;
                     }
-                    // ToDo: set position based on tile boundaries (above/below)
-                    else if (wall.Y1 > wall.Y2) // diagonal \
+                    else // diagonal wall
                     {
-                        _changeX *= -BounceRate * 0.5;
-                        _changeY *= -BounceRate * 0.5;
-                    }
-                    else if (wall.Y1 < wall.Y2) // diagonal /
-                    {
-                        _changeX *= -BounceRate * 0.5;
-                        _changeY *= -BounceRate * 0.5;
+                        var midX = Math.Min(wall.X1, wall.X2) + Math.Abs(wall.X2 - wall.X1) / 2;
+                        var midY = Math.Min(wall.Y1, wall.Y2) + Math.Abs(wall.Y2 - wall.Y1) / 2;
+
+                        if (wall.Y1 > wall.Y2) // diagonal \
+                        {
+                            if (tile.Boundary.All(w => w.X1 <= wall.X2 && w.X2 <= wall.X2)) // bottom-left filled in
+                            {
+                                _x = midX + _ballRadius;
+                                _y = midY + _ballRadius;
+                            }
+                            else // top-right filled in
+                            {
+                                _x = midX - _ballRadius;
+                                _y = midY - _ballRadius;
+                            }
+                        }
+                        else if (wall.Y1 < wall.Y2) // diagonal /
+                        {
+                            if (tile.Boundary.All(w => w.X1 <= wall.X1 && w.X2 <= wall.X1)) // top-left filled in
+                            {
+                                _x = midX + _ballRadius;
+                                _y = midY - _ballRadius;
+                            }
+                            else // bottom-right filled in
+                            {
+                                _x = midX - _ballRadius;
+                                _y = midY + _ballRadius;
+                            }
+                        }
+
+                        _changeX *= -BounceRate * 0.7;
+                        _changeY *= -BounceRate * 0.7;
                     }
                 }
             }
