@@ -136,8 +136,17 @@ namespace Klotski.Elements
 
                         _changeY *= -BounceRate;
                     }
-
-                    // TODO: diagonal walls
+                    // ToDo: set position based on tile boundaries (above/below)
+                    else if (wall.Y1 > wall.Y2) // diagonal \
+                    {
+                        _changeX *= -BounceRate;
+                        _changeY *= -BounceRate;
+                    }
+                    else if (wall.Y1 < wall.Y2) // diagonal /
+                    {
+                        _changeX *= -BounceRate;
+                        _changeY *= -BounceRate;
+                    }
                 }
             }
 
