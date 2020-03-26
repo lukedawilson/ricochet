@@ -17,8 +17,7 @@ namespace Ricochet.Levels
             Screens.Add(Screen1());
             Screens.Add(Screen2());
 
-            // Test different screens by setting this
-            CurrentScreenIndex = 1; // ToDo: link screens together properly
+            CurrentScreenIndex = 0;
         }
 
         private static Screen Screen1()
@@ -98,6 +97,12 @@ namespace Ricochet.Levels
             screen.AddTile(new SquareTile(0, 0, Pipes1));
 
             return screen;
+        }
+
+        public override void MoveToScreen(double ballX, double ballY)
+        {
+            // ToDo: implement this properly
+            CurrentScreenIndex = CurrentScreenIndex == 0 ? 1 : 0;
         }
     }
 }

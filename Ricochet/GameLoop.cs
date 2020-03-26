@@ -17,34 +17,37 @@ namespace Ricochet
         public override void LoadContent()
         { 
             _currentLevel = new Level1();
-            _ball = new Ball(_currentLevel.CurrentScreen, Screen.Width * SquareTile.TileDimension, Screen.Height * SquareTile.TileDimension, BallRadius, Gravity);
+            _ball = CreateBall();
         }
 
         public override void UnloadContent()
         {
         }
 
+        private int? _downArrowDownTicks = 0;
+
         public override void Update()
         {
-            if (IsRightArrowDown())
+            if (_ball.ScreenExitHit != null)
             {
-                _ball.MoveRight();
+                _currentLevel.MoveToScreen(_ball.ScreenExitHit.Item1, _ball.ScreenExitHit.Item2);
+                _ball = CreateBall();
+                return;
             }
-            else if (IsLeftArrowDown())
+
+            if (IsLeftArrowDown()) _ball.SpinLeft();
+            if (IsRightArrowDown()) _ball.SpinRight();
+            if (IsEscDown()) Exit();
+
+            if (IsDownArrowDown())
             {
-                _ball.MoveLeft();
+                _downArrowDownTicks = _downArrowDownTicks ?? 0;
+                _downArrowDownTicks++;
             }
-            else if (IsUpArrowDown())
+            else if (_downArrowDownTicks.HasValue)
             {
-                _ball.Bounce();
-            }
-            else if (IsDownArrowDown())
-            {
-                _ball.MoveDown();
-            }
-            else if (IsEscDown())
-            {
-                Exit();
+                _ball.Bounce(_downArrowDownTicks.Value);
+                _downArrowDownTicks = null;
             }
         }
 
@@ -52,6 +55,11 @@ namespace Ricochet
         {
             _currentLevel.Draw();
             _ball.Draw();
+        }
+
+        private Ball CreateBall()
+        {
+            return new Ball(_currentLevel.CurrentScreen, Screen.Width * SquareTile.TileDimension, Screen.Height * SquareTile.TileDimension, BallRadius, Gravity);
         }
     }
 }

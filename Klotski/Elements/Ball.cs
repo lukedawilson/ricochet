@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Klotski.Helpers;
-using Klotski.Shapes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Point = Klotski.Helpers.Point;
 
 namespace Klotski.Elements
 {
@@ -15,10 +15,10 @@ namespace Klotski.Elements
         private const double BounceRate = 0.95;
         private const double ChangeX = 0.5;
         private const double ChangeY = 2.0;
+        private const double FloatTolerance = 0.001;
 
         private readonly Screen _currentScreen;
 
-        private readonly int _screenWidth;
         private readonly int _screenHeight;
         private readonly int _ballRadius;
 
@@ -29,7 +29,7 @@ namespace Klotski.Elements
         private double _changeX;
         private double _changeY = -BounceRate;
 
-        private Circle _boundary;
+        public Tuple<double, double> ScreenExitHit { get; private set; }
         
         public Ball(
             Screen currentScreen,
@@ -37,33 +37,33 @@ namespace Klotski.Elements
             double gravity)
         {
             _currentScreen = currentScreen;
-            _screenWidth = screenWidth;
             _screenHeight = screenHeight;
             _ballRadius = ballRadius;
             _gravity = gravity;
 
-            _x = _screenWidth / 2.0;
+            _x = screenWidth / 2.0;
             _y = _screenHeight - _ballRadius;
         }
 
-        public void MoveRight()
-        {
-            _changeX += ChangeX;
-        }
-
-        public void MoveLeft()
+        public void SpinLeft()
         {
             _changeX -= ChangeX;
         }
 
-        public void MoveDown() // for testing purposes
+        public void SpinRight()
         {
-            _changeY -= ChangeY;
+            _changeX += ChangeX;
         }
 
-        public void Bounce()
+        public void Bounce(int ticks)
         {
-            _changeY += ChangeY;
+            var potentialX = _x + _changeX;
+            var potentialY = _y + _changeY;
+            var collision = _currentScreen.Tiles.Any(
+                tile => tile.Boundary.Any(
+                    wall => GetIntersection(potentialX, potentialY, wall) != null));
+
+            if (collision) _changeY += ChangeY * ticks;
         }
 
         public void Draw()
@@ -85,29 +85,21 @@ namespace Klotski.Elements
 
         private void UpdateBallPosition()
         {
-            const double tolerance = 0.001;
-
             var potentialX = _x + _changeX;
             var potentialY = _y + _changeY;
 
-            var collision = false;
-
             // Apply collision logic to tiles
+            var collision = false;
             foreach (var tile in _currentScreen.Tiles)
             {
                 foreach (var wall in tile.Boundary)
                 {
-                    var xDirection = Math.Abs(potentialX - _x) < tolerance ? 0 : (potentialX - _x) / Math.Abs(potentialX - _x);
-                    var yDirection = Math.Abs(potentialY - _y) < tolerance ? 0 : (potentialY - _y) / Math.Abs(potentialY - _y);
-
-                    var trajectory = new Line(_x, _y, potentialX + xDirection*_ballRadius, potentialY + yDirection*_ballRadius);
-                    var intersection = Geometry.GetIntersection(trajectory, wall);
-                    if (intersection == null)
+                    if (GetIntersection(potentialX, potentialY, wall) == null)
                         continue;
 
                     collision = true;
 
-                    if (Math.Abs(wall.X1 - wall.X2) < tolerance) // vertical wall
+                    if (Math.Abs(wall.X1 - wall.X2) < FloatTolerance) // vertical wall
                     {
                         if (_x < wall.X1 && tile.Boundary.All(w => w.X1 >= wall.X1 && w.X2 >= wall.X1)) // ball --> wall
                         {
@@ -120,7 +112,7 @@ namespace Klotski.Elements
 
                         _changeX *= -BounceRate;
                     }
-                    else if (Math.Abs(wall.Y1 - wall.Y2) < tolerance) // horizontal wall
+                    else if (Math.Abs(wall.Y1 - wall.Y2) < FloatTolerance) // horizontal wall
                     {
                         if (_y < wall.Y1 && tile.Boundary.All(w => w.Y1 >= wall.Y1 && w.Y2 >= wall.Y1)) // ball ^^ wall
                         {
@@ -171,71 +163,51 @@ namespace Klotski.Elements
                 }
             }
 
-            // Apply collision logic to edges of screen
-            if (potentialY >= _screenHeight - _ballRadius)
+            // If edge of screen hit, report this
+            if (potentialY >= _screenHeight - _ballRadius ||
+                potentialY <= _ballRadius ||
+                potentialY <= _ballRadius ||
+                potentialX <= _ballRadius)
             {
-                _y = _screenHeight - _ballRadius;
-                _changeY *= -BounceRate;
-            }
-            else if (potentialY <= _ballRadius)
-            {
-                _y = _ballRadius;
-                _changeY *= -BounceRate;
-            }
-            else if (!collision)
-            {
-                _y = potentialY;
+                ScreenExitHit = Tuple.Create(potentialX, potentialY);
             }
 
-            if (potentialX >= _screenWidth - _ballRadius)
-            {
-                _x =  _screenWidth - _ballRadius;
-                _changeX *= -BounceRate;
-            }
-            else if (potentialX <= _ballRadius)
-            {
-                _x = _ballRadius;
-                _changeX *= -BounceRate;
-            }
-            else if (!collision)
+            // If no collision, move ball normally
+            if (!collision)
             {
                 _x = potentialX;
+                _y = potentialY;
             }
-
-            // Move the ball's center
-            _boundary = new Circle(_x, _y, _ballRadius);
 
             // Apply gravity
             if (Math.Abs(_changeY) > 1 || _y < _screenHeight - _ballRadius)
                 _changeY -= _gravity;
         }
 
-        private static double GetXComponent(Line trajectory, Line wall)
+        private Point GetIntersection(double potentialX, double potentialY, Line wall)
         {
-            var theta = Geometry.GetAngle(trajectory, wall);
-            return Math.Sin(2 * (Math.PI - theta));
-        }
+            var xDirection = Math.Abs(potentialX - _x) < FloatTolerance ? 0 : (potentialX - _x) / Math.Abs(potentialX - _x);
+            var yDirection = Math.Abs(potentialY - _y) < FloatTolerance ? 0 : (potentialY - _y) / Math.Abs(potentialY - _y);
 
-        private static double GetYComponent(Line trajectory, Line wall)
-        {
-            var theta = Geometry.GetAngle(trajectory, wall);
-            return Math.Cos(2 * (Math.PI - theta));
+            var trajectory = new Line(_x, _y, potentialX + xDirection * _ballRadius, potentialY + yDirection * _ballRadius);
+            var intersection = Geometry.GetIntersection(trajectory, wall);
+            return intersection;
         }
 
         private static Color[] Circle(int diameter, Color fillColour, Color backgroundColour)
         {
             var colorData = new Color[diameter * diameter];
 
-            var diam = diameter / 2f;
-            var diamsq = diam * diam;
+            var radius = diameter / 2f;
+            var radiusSq = radius * radius;
 
             for (var x = 0; x < diameter; x++)
             {
                 for (var y = 0; y < diameter; y++)
                 {
                     var index = x * diameter + y;
-                    var pos = new Vector2(x - diam, y - diam);
-                    if (pos.LengthSquared() <= diamsq)
+                    var pos = new Vector2(x - radius, y - radius);
+                    if (pos.LengthSquared() <= radiusSq)
                     {
                         colorData[index] = fillColour;
                     }
