@@ -16,6 +16,8 @@ namespace Ricochet.Levels
         {
             Screens.Add(Screen1());
             Screens.Add(Screen2());
+            Screens.Add(Screen3());
+            Screens.Add(Screen4());
 
             CurrentScreenIndex = 0;
         }
@@ -99,10 +101,47 @@ namespace Ricochet.Levels
             return screen;
         }
 
+        private static Screen Screen3()
+        {
+            var screen = new Screen();
+
+            // row 1
+            screen.AddTile(new SquareTile(1, 0, Pipes1));
+
+            return screen;
+        }
+
+        private static Screen Screen4()
+        {
+            var screen = new Screen();
+
+            // row 1
+            screen.AddTile(new SquareTile(2, 0, Pipes1));
+
+            return screen;
+        }
+
         public override void MoveToScreen(double ballX, double ballY)
         {
-            // ToDo: implement this properly
-            CurrentScreenIndex = CurrentScreenIndex == 0 ? 1 : 0;
+            var x = (int)ballX / SquareTile.TileDimension + 1;
+            var y = (int)ballY / SquareTile.TileDimension + 1;
+
+            switch (CurrentScreenIndex)
+            {
+                case 0:
+                    if (y == 1 && x >= 4 && x <= 5)
+                        CurrentScreenIndex = 1;
+                    else if (y == 9 && x >= 7 && x <= 8)
+                        CurrentScreenIndex = 2;
+                    else if (x == 1 && y >= 3 && y <= 11)
+                        CurrentScreenIndex = 3;
+                    else if (x == 12 && y >= 4 && y <= 6)
+                        CurrentScreenIndex = 4;
+                    break;
+                default:
+                    CurrentScreenIndex = 0;
+                    break;
+            }
         }
     }
 }

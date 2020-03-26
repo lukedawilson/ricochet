@@ -12,7 +12,8 @@ namespace Klotski.Elements
     /// </summary>
     public class Ball
     {
-        private const double BounceRate = 0.95;
+        private const double BounceRate = 0.5;
+        private const double MaxBounceMultiplier = 10.0;
         private const double ChangeX = 0.5;
         private const double ChangeY = 2.0;
         private const double FloatTolerance = 0.001;
@@ -63,7 +64,7 @@ namespace Klotski.Elements
                 tile => tile.Boundary.Any(
                     wall => GetIntersection(potentialX, potentialY, wall) != null));
 
-            if (collision) _changeY += ChangeY * ticks;
+            if (collision) _changeY += ChangeY * Math.Min(ticks, MaxBounceMultiplier);
         }
 
         public void Draw()
