@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using Klotski.Helpers;
 using Klotski.Shapes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Point = Klotski.Helpers.Point;
 
 namespace Klotski.Elements
 {
