@@ -22,7 +22,7 @@ namespace Klotski
         public Screen CurrentScreen => Screens[CurrentScreenIndex];
 
         public void AddBall(Ball ball) => ball.CurrentLevel = this;
-        public abstract void MoveBallToScreen(Side side, Ball ball);
+        public abstract int GetNextScreen(Side side);
         public abstract void MoveBallToScreen(int index, Ball ball);
 
         public void Draw()

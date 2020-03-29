@@ -170,7 +170,11 @@ namespace Klotski.Elements
             if (Y <= 0) side = Side.Bottom;
             if (X >= CurrentLevel.ScreenWidth) side = Side.Right;
             if (X <= 0) side = Side.Left;
-            if (side.HasValue) CurrentLevel.MoveBallToScreen(side.Value, this);
+            if (side.HasValue)
+            {
+                var nextScreen = CurrentLevel.GetNextScreen(side.Value);
+                CurrentLevel.MoveBallToScreen(nextScreen, this);
+            }
         }
 
         private Point GetIntersection(double potentialX, double potentialY, Line wall)
