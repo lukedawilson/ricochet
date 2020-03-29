@@ -7,7 +7,7 @@ namespace Klotski
 
     public abstract class LevelBase
     {
-        public LevelBase(int screenWidth, int screenHeight)
+        protected LevelBase(int screenWidth, int screenHeight)
         {
             ScreenWidth = screenWidth;
             ScreenHeight = screenHeight;
@@ -20,7 +20,10 @@ namespace Klotski
         protected int CurrentScreenIndex = 0;
 
         public Screen CurrentScreen => Screens[CurrentScreenIndex];
-        public abstract void MoveToScreen(Side side, Ball ball);
+
+        public void AddBall(Ball ball) => ball.CurrentLevel = this;
+        public abstract void MoveBallToScreen(Side side, Ball ball);
+        public abstract void MoveBallToScreen(int index, Ball ball);
 
         public void Draw()
         {

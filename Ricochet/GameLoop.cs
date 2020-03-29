@@ -13,13 +13,11 @@ namespace Ricochet
 
         public override void LoadContent()
         { 
+            _ball = new Ball(Configuration.BallRadius, Configuration.Gravity);
+
             _currentLevel = new Level1();
-            _ball = new Ball(Configuration.BallRadius, Configuration.Gravity)
-            {
-                CurrentLevel = _currentLevel,
-                X = Configuration.ScreenWidth / 2.0,
-                Y = Configuration.ScreenHeight - Configuration.BallRadius
-            };
+            _currentLevel.AddBall(_ball);
+            _currentLevel.MoveBallToScreen(0, _ball);
         }
 
         public override void UnloadContent()

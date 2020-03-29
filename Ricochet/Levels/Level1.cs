@@ -134,7 +134,7 @@ namespace Ricochet.Levels
             return screen;
         }
 
-        public override void MoveToScreen(Side side, Ball ball)
+        public override void MoveBallToScreen(Side side, Ball ball)
         {
             switch (CurrentScreenIndex)
             {
@@ -142,28 +142,34 @@ namespace Ricochet.Levels
                     switch (side)
                     {
                         case Side.Left:
-                            CurrentScreenIndex = 1;
+                            MoveBallToScreen(1, ball);
                             break;
                         case Side.Right:
-                            CurrentScreenIndex = 2;
+                            MoveBallToScreen(2, ball);
                             break;
                         case Side.Top:
-                            CurrentScreenIndex = 3;
+                            MoveBallToScreen(3, ball);
                             break;
                         case Side.Bottom:
-                            CurrentScreenIndex = 4;
+                            MoveBallToScreen(4, ball);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException(nameof(side), side, null);
                     }
                     break;
                 default:
-                    CurrentScreenIndex = 0;
+                    MoveBallToScreen(0, ball);
                     break;
             }
             
+            MoveBallToScreen(CurrentScreenIndex, ball);
+        }
+
+        public override void MoveBallToScreen(int index, Ball ball)
+        {
+            CurrentScreenIndex = index;
             ball.X = Configuration.ScreenWidth / 2.0;
-            ball.Y = Configuration.ScreenHeight - ball.BallRadius;
+            ball.Y = Configuration.ScreenHeight - ball.BallRadius - 10;
         }
     }
 }
