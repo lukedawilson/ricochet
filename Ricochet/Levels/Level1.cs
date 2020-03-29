@@ -13,7 +13,7 @@ namespace Ricochet.Levels
         private const string Bricks2TriangleBottomRight = "bricks2_triangle_bottom_right.png";
         private const string Bricks2TriangleTopRight = "bricks2_triangle_top_right.png";
 
-        public Level1()
+        public Level1() : base(Configuration.ScreenWidth, Configuration.ScreenHeight)
         {
             Screens.Add(Screen0());
             Screens.Add(Screen1());

@@ -7,6 +7,15 @@ namespace Klotski
 
     public abstract class LevelBase
     {
+        public LevelBase(int screenWidth, int screenHeight)
+        {
+            ScreenWidth = screenWidth;
+            ScreenHeight = screenHeight;
+        }
+
+        public int ScreenWidth { get; private set; }
+        public double ScreenHeight { get; private set; }
+
         protected readonly IList<Screen> Screens = new List<Screen>();
         protected int CurrentScreenIndex = 0;
 

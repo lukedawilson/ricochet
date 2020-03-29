@@ -12,8 +12,8 @@ namespace Klotski.Elements
     /// </summary>
     public class Ball
     {
-        private const double BounceRate = 0.5;
-        private const double MaxBounceMultiplier = 10.0;
+        private const double BounceRate = 0.3;
+        private const double MaxBounceMultiplier = 12.0;
         private const double ChangeX = 0.5;
         private const double ChangeY = 2.0;
         private const double FloatTolerance = 0.001;
@@ -24,22 +24,15 @@ namespace Klotski.Elements
 
         public readonly int BallRadius;
 
-        private readonly int _screenWidth;
-        private readonly int _screenHeight;
         private readonly double _gravity;
 
         private double _changeX;
         private double _changeY = -BounceRate;
         
-        public Ball(int screenWidth, int screenHeight, int ballRadius, double gravity)
+        public Ball(int ballRadius, double gravity)
         {
-            _screenWidth = screenWidth;
-            _screenHeight = screenHeight;
             BallRadius = ballRadius;
             _gravity = gravity;
-
-            X = _screenWidth / 2.0;
-            Y = _screenHeight - BallRadius;
         }
 
         public void SpinLeft()
@@ -67,7 +60,7 @@ namespace Klotski.Elements
         {
             UpdateBallPosition();
 
-            var yFromTop = _screenHeight - Y;
+            var yFromTop = CurrentLevel.ScreenHeight - Y;
             var position = new Vector2((float)(X - BallRadius), (float)(yFromTop - BallRadius));
 
             var diameter = BallRadius * 2;
@@ -154,8 +147,8 @@ namespace Klotski.Elements
                             }
                         }
 
-                        _changeX *= -BounceRate * 0.7;
-                        _changeY *= -BounceRate * 0.7;
+                        _changeX *= -BounceRate;
+                        _changeY *= -BounceRate;
                     }
                 }
             }
@@ -167,21 +160,17 @@ namespace Klotski.Elements
                 Y = potentialY;
             }
 
+            // Apply gravity
+            if (Math.Abs(_changeY) > 1 || Y < CurrentLevel.ScreenHeight - BallRadius)
+                _changeY -= _gravity;
+
             // If edge of screen hit, switch screens and continue
             Side? side = null;
-            if (Y >= _screenHeight) side = Side.Top;
+            if (Y >= CurrentLevel.ScreenHeight) side = Side.Top;
             if (Y <= 0) side = Side.Bottom;
-            if (X >= _screenWidth) side = Side.Right;
+            if (X >= CurrentLevel.ScreenWidth) side = Side.Right;
             if (X <= 0) side = Side.Left;
-            if (side.HasValue)
-            {
-                CurrentLevel.MoveToScreen(side.Value, this);
-                return;
-            }
-
-            // Apply gravity
-            if (Math.Abs(_changeY) > 1 || Y < _screenHeight - BallRadius)
-                _changeY -= _gravity;
+            if (side.HasValue) CurrentLevel.MoveToScreen(side.Value, this);
         }
 
         private Point GetIntersection(double potentialX, double potentialY, Line wall)

@@ -6,22 +6,20 @@ namespace Ricochet
 {
     internal class GameLoop : GameLoopBase
     {
-        private const double Gravity = 1;
-        private const int BallRadius = 25;
-
         private LevelBase _currentLevel;
         private Ball _ball;
 
-        public override string Title => "Ricochet";
+        public override string Title => Configuration.Title;
 
         public override void LoadContent()
         { 
             _currentLevel = new Level1();
-            _ball = new Ball(
-                Configuration.ScreenWidth,
-                Configuration.ScreenHeight,
-                BallRadius,
-                Gravity) { CurrentLevel = _currentLevel };
+            _ball = new Ball(Configuration.BallRadius, Configuration.Gravity)
+            {
+                CurrentLevel = _currentLevel,
+                X = Configuration.ScreenWidth / 2.0,
+                Y = Configuration.ScreenHeight - Configuration.BallRadius
+            };
         }
 
         public override void UnloadContent()
