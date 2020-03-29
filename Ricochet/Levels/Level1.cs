@@ -1,4 +1,5 @@
-﻿using Klotski;
+﻿using System;
+using Klotski;
 using Klotski.Elements;
 
 namespace Ricochet.Levels
@@ -14,6 +15,7 @@ namespace Ricochet.Levels
 
         public Level1()
         {
+            Screens.Add(Screen0());
             Screens.Add(Screen1());
             Screens.Add(Screen2());
             Screens.Add(Screen3());
@@ -22,7 +24,7 @@ namespace Ricochet.Levels
             CurrentScreenIndex = 0;
         }
 
-        private static Screen Screen1()
+        private static Screen Screen0()
         {
             var screen = new Screen();
 
@@ -91,6 +93,17 @@ namespace Ricochet.Levels
             return screen;
         }
 
+        private static Screen Screen1()
+        {
+            var screen = new Screen();
+
+            // row 1
+            screen.AddTile(new SquareTile(0, 1, Pipes1));
+
+            return screen;
+        }
+
+
         private static Screen Screen2()
         {
             var screen = new Screen();
@@ -121,7 +134,7 @@ namespace Ricochet.Levels
             return screen;
         }
 
-        public override void MoveToScreen(double ballX, double ballY)
+        public override void MoveToScreen(Side side, double ballX, double ballY)
         {
             var x = (int)ballX / SquareTile.TileDimension + 1;
             var y = (int)ballY / SquareTile.TileDimension + 1;
@@ -129,14 +142,23 @@ namespace Ricochet.Levels
             switch (CurrentScreenIndex)
             {
                 case 0:
-                    if (y == 1 && x >= 4 && x <= 5)
-                        CurrentScreenIndex = 1;
-                    else if (y == 9 && x >= 7 && x <= 8)
-                        CurrentScreenIndex = 2;
-                    else if (x == 1 && y >= 3 && y <= 11)
-                        CurrentScreenIndex = 3;
-                    else if (x == 12 && y >= 4 && y <= 6)
-                        CurrentScreenIndex = 4;
+                    switch (side)
+                    {
+                        case Side.Left:
+                            CurrentScreenIndex = 1;
+                            break;
+                        case Side.Right:
+                            CurrentScreenIndex = 2;
+                            break;
+                        case Side.Top:
+                            CurrentScreenIndex = 3;
+                            break;
+                        case Side.Bottom:
+                            CurrentScreenIndex = 4;
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(side), side, null);
+                    }
                     break;
                 default:
                     CurrentScreenIndex = 0;

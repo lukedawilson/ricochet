@@ -30,7 +30,7 @@ namespace Ricochet
         {
             if (_ball.ScreenExitHit != null)
             {
-                _currentLevel.MoveToScreen(_ball.ScreenExitHit.Item1, _ball.ScreenExitHit.Item2);
+                _currentLevel.MoveToScreen(_ball.ScreenExitHit.Item1, _ball.ScreenExitHit.Item2, _ball.ScreenExitHit.Item3);
                 _ball = CreateBall();
                 return;
             }

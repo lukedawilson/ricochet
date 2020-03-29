@@ -20,6 +20,7 @@ namespace Klotski.Elements
 
         private readonly Screen _currentScreen;
 
+        private readonly int _screenWidth;
         private readonly int _screenHeight;
         private readonly int _ballRadius;
 
@@ -30,7 +31,7 @@ namespace Klotski.Elements
         private double _changeX;
         private double _changeY = -BounceRate;
 
-        public Tuple<double, double> ScreenExitHit { get; private set; }
+        public Tuple<Side, double, double> ScreenExitHit { get; private set; }
         
         public Ball(
             Screen currentScreen,
@@ -38,11 +39,12 @@ namespace Klotski.Elements
             double gravity)
         {
             _currentScreen = currentScreen;
+            _screenWidth = screenWidth;
             _screenHeight = screenHeight;
             _ballRadius = ballRadius;
             _gravity = gravity;
 
-            _x = screenWidth / 2.0;
+            _x = _screenWidth / 2.0;
             _y = _screenHeight - _ballRadius;
         }
 
@@ -165,13 +167,12 @@ namespace Klotski.Elements
             }
 
             // If edge of screen hit, report this
-            if (potentialY >= _screenHeight - _ballRadius ||
-                potentialY <= _ballRadius ||
-                potentialY <= _ballRadius ||
-                potentialX <= _ballRadius)
-            {
-                ScreenExitHit = Tuple.Create(potentialX, potentialY);
-            }
+            Side? side = null;
+            if (potentialY >= _screenHeight - _ballRadius) side = Side.Top;
+            if (potentialY <= _ballRadius) side = Side.Bottom;
+            if (potentialX >= _screenWidth - _ballRadius) side = Side.Right;
+            if (potentialX <= _ballRadius) side = Side.Left;
+            if (side.HasValue) ScreenExitHit = Tuple.Create(side.Value, potentialX, potentialY);
 
             // If no collision, move ball normally
             if (!collision)
