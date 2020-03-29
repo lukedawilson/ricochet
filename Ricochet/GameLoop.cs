@@ -17,7 +17,7 @@ namespace Ricochet
 
             _currentLevel = new Level1();
             _currentLevel.AddBall(_ball);
-            _currentLevel.MoveBallToScreen(0, _ball);
+            _currentLevel.SetInitialBallPosition(_ball);
         }
 
         public override void UnloadContent()

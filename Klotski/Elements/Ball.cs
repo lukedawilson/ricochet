@@ -172,8 +172,8 @@ namespace Klotski.Elements
             if (X <= 0) side = Side.Left;
             if (side.HasValue)
             {
-                var nextScreen = CurrentLevel.GetNextScreen(side.Value);
-                CurrentLevel.MoveBallToScreen(nextScreen, this);
+                CurrentLevel.MoveBallToScreen(side.Value);
+                CurrentLevel.SetInitialBallPosition(this);
             }
         }
 

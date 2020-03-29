@@ -13,17 +13,17 @@ namespace Klotski
             ScreenHeight = screenHeight;
         }
 
-        public int ScreenWidth { get; private set; }
-        public double ScreenHeight { get; private set; }
+        public int ScreenWidth { get; }
+        public double ScreenHeight { get; }
 
         protected readonly IList<Screen> Screens = new List<Screen>();
-        protected int CurrentScreenIndex = 0;
+        protected int CurrentScreenIndex { get; set; }
 
         public Screen CurrentScreen => Screens[CurrentScreenIndex];
 
         public void AddBall(Ball ball) => ball.CurrentLevel = this;
-        public abstract int GetNextScreen(Side side);
-        public abstract void MoveBallToScreen(int index, Ball ball);
+        public abstract void MoveBallToScreen(Side side);
+        public abstract void SetInitialBallPosition(Ball ball);
 
         public void Draw()
         {
