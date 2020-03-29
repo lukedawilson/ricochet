@@ -134,11 +134,8 @@ namespace Ricochet.Levels
             return screen;
         }
 
-        public override void MoveToScreen(Side side, double ballX, double ballY)
+        public override void MoveToScreen(Side side, Ball ball)
         {
-            var x = (int)ballX / SquareTile.TileDimension + 1;
-            var y = (int)ballY / SquareTile.TileDimension + 1;
-
             switch (CurrentScreenIndex)
             {
                 case 0:
@@ -164,6 +161,9 @@ namespace Ricochet.Levels
                     CurrentScreenIndex = 0;
                     break;
             }
+            
+            ball.X = Configuration.ScreenWidth / 2.0;
+            ball.Y = Configuration.ScreenHeight - ball.BallRadius;
         }
     }
 }

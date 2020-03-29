@@ -11,7 +11,7 @@ namespace Klotski
         protected int CurrentScreenIndex = 0;
 
         public Screen CurrentScreen => Screens[CurrentScreenIndex];
-        public abstract void MoveToScreen(Side side, double ballX, double ballY);
+        public abstract void MoveToScreen(Side side, Ball ball);
 
         public void Draw()
         {
