@@ -164,7 +164,7 @@ namespace Ricochet.Levels
             }
         }
 
-        public override void SetInitialBallPosition(Ball ball)
+        public override void InitialiseBallPosition(Ball ball)
         {
             ball.X = Configuration.ScreenWidth / 2.0;
             ball.Y = Configuration.ScreenHeight - ball.BallRadius - 10;

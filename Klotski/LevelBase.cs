@@ -21,9 +21,14 @@ namespace Klotski
 
         public Screen CurrentScreen => Screens[CurrentScreenIndex];
 
-        public void AddBall(Ball ball) => ball.CurrentLevel = this;
+        public void AddBall(Ball ball)
+        {
+            ball.CurrentLevel = this;
+            InitialiseBallPosition(ball);
+        }
+
         public abstract void MoveBallToScreen(Side side);
-        public abstract void SetInitialBallPosition(Ball ball);
+        public abstract void InitialiseBallPosition(Ball ball);
 
         public void Draw()
         {
