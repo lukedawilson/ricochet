@@ -12,7 +12,6 @@ namespace Klotski.Elements
     /// </summary>
     public class Ball
     {
-        private const double BounceRate = 0.3;
         private const double MaxBounceMultiplier = 12.0;
         private const double ChangeX = 0.5;
         private const double ChangeY = 2.0;
@@ -27,7 +26,7 @@ namespace Klotski.Elements
         private readonly double _gravity;
 
         private double _changeX;
-        private double _changeY = -BounceRate;
+        private double _changeY;
         
         public Ball(int ballRadius, double gravity)
         {
@@ -100,7 +99,7 @@ namespace Klotski.Elements
                             X = wall.X1 + BallRadius;
                         }
 
-                        _changeX *= -BounceRate;
+                        _changeX = 0;
                     }
                     else if (Math.Abs(wall.Y1 - wall.Y2) < FloatTolerance) // horizontal wall
                     {
@@ -113,7 +112,7 @@ namespace Klotski.Elements
                             Y = wall.Y1 + BallRadius;
                         }
 
-                        _changeY *= -BounceRate;
+                        _changeY = 0;
                     }
                     else // diagonal wall
                     {
@@ -144,8 +143,8 @@ namespace Klotski.Elements
                             }
                         }
 
-                        _changeX *= -BounceRate;
-                        _changeY *= -BounceRate;
+                        _changeX = 0;
+                        _changeY = 0;
                     }
                 }
             }

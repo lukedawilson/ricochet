@@ -61,13 +61,13 @@ namespace Klotski.Helpers
             // equations of the form x = c (two vertical lines)
             if (Math.Abs(x1 - x2) < tolerance && Math.Abs(x3 - x4) < tolerance && Math.Abs(x1 - x3) < tolerance)
             {
-                throw new Exception("Both lines overlap vertically, ambiguous intersection points.");
+                return new Point(x1 + (x2 - x1)/2, y1 + (y2 - y1)/2);
             }
     
             //equations of the form y=c (two horizontal lines)
             if (Math.Abs(y1 - y2) < tolerance && Math.Abs(y3 - y4) < tolerance && Math.Abs(y1 - y3) < tolerance)
             {
-                throw new Exception("Both lines overlap horizontally, ambiguous intersection points.");
+                return new Point(x1 + (x2 - x1)/2, y1 + (y2 - y1)/2);
             }
     
             //equations of the form x=c (two vertical lines)
