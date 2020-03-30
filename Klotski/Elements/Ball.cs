@@ -117,33 +117,30 @@ namespace Klotski.Elements
                     }
                     else // diagonal wall
                     {
-                        var midX = Math.Min(wall.X1, wall.X2) + Math.Abs(wall.X2 - wall.X1) / 2;
-                        var midY = Math.Min(wall.Y1, wall.Y2) + Math.Abs(wall.Y2 - wall.Y1) / 2;
-
                         if (wall.Y1 > wall.Y2) // diagonal \
                         {
                             if (tile.Boundary.All(w => w.X1 <= wall.X2 && w.X2 <= wall.X2)) // bottom-left filled in
                             {
-                                X = midX + BallRadius;
-                                Y = midY + BallRadius;
+                                X += BallRadius;
+                                Y += BallRadius;
                             }
                             else // top-right filled in
                             {
-                                X = midX - BallRadius;
-                                Y = midY - BallRadius;
+                                X -= BallRadius;
+                                Y -= BallRadius;
                             }
                         }
                         else if (wall.Y1 < wall.Y2) // diagonal /
                         {
                             if (tile.Boundary.All(w => w.X1 <= wall.X1 && w.X2 <= wall.X1)) // top-left filled in
                             {
-                                X = midX + BallRadius;
-                                Y = midY - BallRadius;
+                                X += BallRadius;
+                                Y -= BallRadius;
                             }
                             else // bottom-right filled in
                             {
-                                X = midX - BallRadius;
-                                Y = midY + BallRadius;
+                                X -= BallRadius;
+                                Y += BallRadius;
                             }
                         }
 
