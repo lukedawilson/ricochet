@@ -169,7 +169,7 @@ namespace Klotski.Elements
             if (side.HasValue)
             {
                 CurrentLevel.MoveBallToScreen(side.Value);
-                CurrentLevel.InitialiseBallPosition(this);
+                CurrentLevel.InitialiseBallPosition(side.Value, this);
             }
         }
 

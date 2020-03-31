@@ -42,51 +42,51 @@ namespace Ricochet.Levels
             );
             AddScreen(
                 "initial-left",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"PP                        "
+                @"PPPPPPPPPPPPPPPPPPPPPPPPPP",
+                @"PP                        ",
+                @"PP                        ",
+                @"PP                        ",
+                @"PP                        ",
+                @"PP                        ",
+                @"PP                        ",
+                @"PP                        ",
+                @"PPPPPPPPPPPPPPPPPPPPPPPPPP"
             );
             AddScreen(
                 "initial-right",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"  PP                      "
+                @"PPPPPPPPPPPPPPPPPPPPPPPPPP",
+                @"                        PP",
+                @"                        PP",
+                @"                        PP",
+                @"                        PP",
+                @"                        PP",
+                @"                        PP",
+                @"                        PP",
+                @"PPPPPPPPPPPPPPPPPPPPPPPPPP"
             );
             AddScreen(
                 "initial-top",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"    PP                    "
+                @"PPPPPPPPPPPPPPPPPPPPPPPPPP",
+                @"PP                      PP",
+                @"PP                      PP",
+                @"PP                      PP",
+                @"PP                      PP",
+                @"PP                      PP",
+                @"PP                      PP",
+                @"PP                      PP",
+                @"PP                      PP"
             );
             AddScreen(
                 "initial-bottom",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"                          ",
-                @"      PP                  "
+                @"PP                      PP",
+                @"PP                      PP",
+                @"PP                      PP",
+                @"PP                      PP",
+                @"PP                      PP",
+                @"PP                      PP",
+                @"PP                      PP",
+                @"PP                      PP",
+                @"PPPPPPPPPPPPPPPPPPPPPPPPPP"
             );
 
             CurrentScreenKey = "initial";
@@ -97,40 +97,50 @@ namespace Ricochet.Levels
             Screens.Add(key, GenerateLayout(layout, _mappings));
         }
 
+        private readonly string[,] _screensLayout =
+        {
+            { null,           "initial-top",    null            },
+            { "initial-left", "initial",        "initial-right" },
+            { null,           "initial-bottom", null            }
+        };
+
         public override void MoveBallToScreen(Side side)
         {
-            switch (CurrentScreenKey)
+            for (var yy = 0; yy < _screensLayout.GetLength(0); yy++)
             {
-                case "initial":
+                for (var xx = 0; xx < _screensLayout.GetLength(1); xx++)
+                {
+                    var current = _screensLayout[yy, xx];
+                    if (current != CurrentScreenKey) continue;
+
+                    int x, y;
                     switch (side)
                     {
                         case Side.Left:
-                            CurrentScreenKey =  "initial-left";
+                            x = xx - 1;
+                            y = yy;
                             break;
                         case Side.Right:
-                            CurrentScreenKey =  "initial-right";
+                            x = xx + 1;
+                            y = yy;
                             break;
                         case Side.Top:
-                            CurrentScreenKey =  "initial-top";
+                            x = xx;
+                            y = yy - 1;
                             break;
                         case Side.Bottom:
-                            CurrentScreenKey =  "initial-bottom";
+                            x = xx;
+                            y = yy + 1;
                             break;
                         default:
                             throw new ArgumentOutOfRangeException(nameof(side), side, null);
                     }
 
-                    break;
-                default:
-                    CurrentScreenKey =  "initial";
-                    break;
+                    CurrentScreenKey = _screensLayout[y, x];
+                    if (CurrentScreenKey == null) throw new ArgumentOutOfRangeException();
+                    return;
+                }
             }
-        }
-
-        public override void InitialiseBallPosition(Ball ball)
-        {
-            ball.X = Configuration.ScreenWidth / 2.0;
-            ball.Y = Configuration.ScreenHeight - ball.BallRadius - 10;
         }
     }
 }

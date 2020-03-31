@@ -32,11 +32,32 @@ namespace Klotski
         public void AddBall(Ball ball)
         {
             ball.CurrentLevel = this;
-            InitialiseBallPosition(ball);
+            ball.X = ScreenWidth / 2.0;
+            ball.Y = ScreenHeight - ball.BallRadius - 150;
         }
 
         public abstract void MoveBallToScreen(Side side);
-        public abstract void InitialiseBallPosition(Ball ball);
+
+        public virtual void InitialiseBallPosition(Side side, Ball ball)
+        {
+            switch (side)
+            {
+                case Side.Left:
+                    ball.X = ScreenWidth;
+                    break;
+                case Side.Right:
+                    ball.X = 0;
+                    break;
+                case Side.Top:
+                    ball.Y = 0;
+                    break;
+                case Side.Bottom:
+                    ball.Y = ScreenHeight;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(side), side, null);
+            }
+        }
 
         public void Draw()
         {
