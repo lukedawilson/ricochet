@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Klotski;
 using Klotski.Elements;
 
@@ -6,6 +8,8 @@ namespace Ricochet.Levels
 {
     public class Level1 : LevelBase
     {
+        private readonly int _horizontalTiles;
+        private readonly int _verticalTiles;
         private const string Pipes1 = "pipes1.png";
         private const string Checker2 = "checker2.png";
         private const string Bricks2 = "bricks2.png";
@@ -13,8 +17,13 @@ namespace Ricochet.Levels
         private const string Bricks2TriangleBottomRight = "bricks2_triangle_bottom_right.png";
         private const string Bricks2TriangleTopRight = "bricks2_triangle_top_right.png";
 
-        public Level1() : base(Configuration.ScreenWidth, Configuration.ScreenHeight)
+        public Level1(int horizontalTiles, int verticalTiles) : base(
+            Configuration.ScreenWidth,
+            Configuration.ScreenHeight)
         {
+            _horizontalTiles = horizontalTiles;
+            _verticalTiles = verticalTiles;
+
             Screens.Add(Screen0());
             Screens.Add(Screen1());
             Screens.Add(Screen2());
@@ -24,71 +33,109 @@ namespace Ricochet.Levels
             CurrentScreenIndex = 0;
         }
 
-        private static Screen Screen0()
+        private Screen Screen0()
         {
+            var mappings = new Dictionary<string, TileSpec>
+            {
+                { @"CC", new TileSpec(Checker2) },
+                { @"PP", new TileSpec(Pipes1) },
+                { @"BB", new TileSpec(Bricks2) },
+                { @"/B", new BottomRightTriangleTileSpec(Bricks2TriangleBottomRight) },
+                //{ @"B/", Bricks2TriangleTopLeft },
+                { @"\B", new TopRightTriangleTileSpec(Bricks2TriangleTopRight) },
+                { @"B\", new BottomLeftTriangleTileSpec(Bricks2TriangleBottomLeft) },
+            };
+//            var layout1 = new[]
+//            {
+//                @"CCPCCC  BBBBB",
+//                @"  C       \BB",
+//                @"           \B",
+//                @"             ",
+//                @"             ",
+//                @"  CCCCC  B\  ",
+//                @"  C      BBBB",
+//                @"CCC     /BBBB",
+//                @"PPC  BBBBBBBB"
+//            };
+            var layout = new[]
+            {
+                @"CCCCPPCCCCCC    BBBBBBBBBB",
+                @"    CC              \BBBBB",
+                @"                      \BBB",
+                @"                          ",
+                @"                          ",
+                @"    CCCCCCCCCC    BBB\    ",
+                @"    CC            BBBBBBBB",
+                @"CCCCCC          /BBBBBBBBB",
+                @"PPPPCC    BBBBBBBBBBBBBBBB"
+            };
+
+            return GenerateLayout(layout, mappings);
+        }
+
+        public class TileSpec
+        {
+            public TileSpec(string file)
+            {
+                File = file;
+            }
+
+            public string File { get; private set; }
+            public virtual Func<int, int, string, SquareTile> Create => (x, y, file) => new SquareTile(x, y, file);
+        }
+
+        public class BottomRightTriangleTileSpec : TileSpec
+        {
+            public BottomRightTriangleTileSpec(string file) : base(file)
+            {
+            }
+
+            public override Func<int, int, string, SquareTile> Create => (x, y, file) => new BottomRightTriangleTile(x, y, file);
+        }
+
+        public class TopRightTriangleTileSpec : TileSpec
+        {
+            public TopRightTriangleTileSpec(string file) : base(file)
+            {
+            }
+
+            public override Func<int, int, string, SquareTile> Create => (x, y, file) => new TopRightTriangleTile(x, y, file);
+        }
+
+        public class BottomLeftTriangleTileSpec : TileSpec
+        {
+            public BottomLeftTriangleTileSpec(string file) : base(file)
+            {
+            }
+
+            public override Func<int, int, string, SquareTile> Create => (x, y, file) => new BottomLeftTriangleTile(x, y, file);
+        }
+
+        private Screen GenerateLayout(string[] layout, IDictionary<string, TileSpec> mappings)
+        {
+            if (layout.Length != _verticalTiles)
+                throw new ArgumentException($"Must have {_verticalTiles} rows");
+
+            if (layout.Any(r => r.Length != _horizontalTiles * 2))
+                throw new ArgumentException($"Must have {_horizontalTiles} columns");
+
             var screen = new Screen();
 
-            // row 1
-            screen.AddTile(new SquareTile(0, 0, Pipes1));
-            screen.AddTile(new SquareTile(1, 0, Pipes1));
-            screen.AddTile(new SquareTile(2, 0, Checker2));
-            screen.AddTile(new SquareTile(5, 0, Bricks2));
-            screen.AddTile(new SquareTile(6, 0, Bricks2));
-            screen.AddTile(new SquareTile(7, 0, Bricks2));
-            screen.AddTile(new SquareTile(8, 0, Bricks2));
-            screen.AddTile(new SquareTile(9, 0, Bricks2));
-            screen.AddTile(new SquareTile(10, 0, Bricks2));
-            screen.AddTile(new SquareTile(11, 0, Bricks2));
-            screen.AddTile(new SquareTile(12, 0, Bricks2));
+            for (var yy = layout.Length - 1; yy >= 0; yy--)
+            {
+                var row = layout[yy];
 
-            // row 2
-            screen.AddTile(new SquareTile(0, 1, Checker2));
-            screen.AddTile(new SquareTile(1, 1, Checker2));
-            screen.AddTile(new SquareTile(2, 1, Checker2));
-            screen.AddTile(new BottomRightTriangleTile(8, 1, Bricks2TriangleBottomRight));
-            screen.AddTile(new SquareTile(9, 1, Bricks2));
-            screen.AddTile(new SquareTile(10, 1, Bricks2));
-            screen.AddTile(new SquareTile(11, 1, Bricks2));
-            screen.AddTile(new SquareTile(12, 1, Bricks2));
+                var y = layout.Length - 1 - yy;
+                for (var xx = 0; xx < row.Length; xx+= 2)
+                {
+                    var tile = row.Substring(xx, 2);
+                    if (string.IsNullOrWhiteSpace(tile)) continue;
 
-            // row 3
-            screen.AddTile(new SquareTile(2, 2, Checker2));
-            screen.AddTile(new SquareTile(9, 2, Bricks2));
-            screen.AddTile(new SquareTile(10, 2, Bricks2));
-            screen.AddTile(new SquareTile(11, 2, Bricks2));
-            screen.AddTile(new SquareTile(12, 2, Bricks2));
-
-            // row 4
-            screen.AddTile(new SquareTile(2, 3, Checker2));
-            screen.AddTile(new SquareTile(3, 3, Checker2));
-            screen.AddTile(new SquareTile(4, 3, Checker2));
-            screen.AddTile(new SquareTile(5, 3, Checker2));
-            screen.AddTile(new SquareTile(6, 3, Checker2));
-            screen.AddTile(new SquareTile(9, 3, Bricks2));
-            screen.AddTile(new BottomLeftTriangleTile(10, 3, Bricks2TriangleBottomLeft));
-
-            // row 7
-            screen.AddTile(new TopRightTriangleTile(11, 6, Bricks2TriangleTopRight));
-            screen.AddTile(new SquareTile(12, 6, Bricks2));
-
-            // row 8
-            screen.AddTile(new SquareTile(2, 7, Checker2));
-            screen.AddTile(new TopRightTriangleTile(10, 7, Bricks2TriangleTopRight));
-            screen.AddTile(new SquareTile(11, 7, Bricks2));
-            screen.AddTile(new SquareTile(12, 7, Bricks2));
-
-            // row 9
-            screen.AddTile(new SquareTile(0, 8, Checker2));
-            screen.AddTile(new SquareTile(1, 8, Checker2));
-            screen.AddTile(new SquareTile(2, 8, Pipes1));
-            screen.AddTile(new SquareTile(3, 8, Checker2));
-            screen.AddTile(new SquareTile(4, 8, Checker2));
-            screen.AddTile(new SquareTile(5, 8, Checker2));
-            screen.AddTile(new SquareTile(8, 8, Bricks2));
-            screen.AddTile(new SquareTile(9, 8, Bricks2));
-            screen.AddTile(new SquareTile(10, 8, Bricks2));
-            screen.AddTile(new SquareTile(11, 8, Bricks2));
-            screen.AddTile(new SquareTile(12, 8, Bricks2));
+                    var tileSpec = mappings[row.Substring(xx, 2)];
+                    var x = xx / 2;
+                    screen.AddTile(tileSpec.Create(x, y, tileSpec.File));
+                }
+            }
 
             return screen;
         }
