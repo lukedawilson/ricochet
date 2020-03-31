@@ -36,8 +36,6 @@ namespace Klotski
             ball.Y = ScreenHeight - ball.BallRadius - 150;
         }
 
-        public abstract void MoveBallToScreen(Side side);
-
         public virtual void InitialiseBallPosition(Side side, Ball ball)
         {
             switch (side)
@@ -62,6 +60,11 @@ namespace Klotski
         public void Draw()
         {
             CurrentScreen.Draw();
+        }
+
+        protected void AddScreen(string key, params string[] layout)
+        {
+            Screens.Add(key, GenerateLayout(layout, Mappings));
         }
 
         protected Screen GenerateLayout(IReadOnlyList<string> layout, IDictionary<string, TileFactory> mappings)
@@ -93,6 +96,8 @@ namespace Klotski
             return screen;
         }
 
+        protected abstract IDictionary<string, TileFactory> Mappings { get; }
+
         // ToDo: implement this
         //            var layout1 = new[]
         //            {
@@ -106,5 +111,46 @@ namespace Klotski
         //                @"CCC     /BBBB",
         //                @"PPC  BBBBBBBB"
         //            };
+
+        protected abstract string[,] ScreensLayout { get; }
+
+        public virtual void MoveBallToScreen(Side side)
+        {
+            for (var yy = 0; yy < ScreensLayout.GetLength(0); yy++)
+            {
+                for (var xx = 0; xx < ScreensLayout.GetLength(1); xx++)
+                {
+                    var current = ScreensLayout[yy, xx];
+                    if (current != CurrentScreenKey) continue;
+
+                    int x, y;
+                    switch (side)
+                    {
+                        case Side.Left:
+                            x = xx - 1;
+                            y = yy;
+                            break;
+                        case Side.Right:
+                            x = xx + 1;
+                            y = yy;
+                            break;
+                        case Side.Top:
+                            x = xx;
+                            y = yy - 1;
+                            break;
+                        case Side.Bottom:
+                            x = xx;
+                            y = yy + 1;
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(side), side, null);
+                    }
+
+                    CurrentScreenKey = ScreensLayout[y, x];
+                    if (CurrentScreenKey == null) throw new ArgumentOutOfRangeException();
+                    return;
+                }
+            }
+        }
     }
 }

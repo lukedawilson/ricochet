@@ -15,7 +15,7 @@ namespace Ricochet.Levels
         private const string Bricks2TriangleTopLeft = "bricks2_triangle_top_left.png";
         private const string Bricks2TriangleTopRight = "bricks2_triangle_top_right.png";
 
-        private readonly IDictionary<string, TileFactory> _mappings = new Dictionary<string, TileFactory>
+        protected override IDictionary<string, TileFactory> Mappings => new Dictionary<string, TileFactory>
         {
             { @"CC", new TileFactory<SquareTile>(Checker2) },
             { @"PP", new TileFactory<SquareTile>(Pipes1) },
@@ -92,55 +92,11 @@ namespace Ricochet.Levels
             CurrentScreenKey = "initial";
         }
 
-        private void AddScreen(string key, params string[] layout)
-        {
-            Screens.Add(key, GenerateLayout(layout, _mappings));
-        }
-
-        private readonly string[,] _screensLayout =
+        protected override string[,] ScreensLayout => new[,]
         {
             { null,           "initial-top",    null            },
             { "initial-left", "initial",        "initial-right" },
             { null,           "initial-bottom", null            }
         };
-
-        public override void MoveBallToScreen(Side side)
-        {
-            for (var yy = 0; yy < _screensLayout.GetLength(0); yy++)
-            {
-                for (var xx = 0; xx < _screensLayout.GetLength(1); xx++)
-                {
-                    var current = _screensLayout[yy, xx];
-                    if (current != CurrentScreenKey) continue;
-
-                    int x, y;
-                    switch (side)
-                    {
-                        case Side.Left:
-                            x = xx - 1;
-                            y = yy;
-                            break;
-                        case Side.Right:
-                            x = xx + 1;
-                            y = yy;
-                            break;
-                        case Side.Top:
-                            x = xx;
-                            y = yy - 1;
-                            break;
-                        case Side.Bottom:
-                            x = xx;
-                            y = yy + 1;
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(side), side, null);
-                    }
-
-                    CurrentScreenKey = _screensLayout[y, x];
-                    if (CurrentScreenKey == null) throw new ArgumentOutOfRangeException();
-                    return;
-                }
-            }
-        }
     }
 }
