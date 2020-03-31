@@ -24,10 +24,10 @@ namespace Klotski
         public int ScreenWidth { get; }
         public double ScreenHeight { get; }
 
-        protected readonly IList<Screen> Screens = new List<Screen>();
-        protected int CurrentScreenIndex { get; set; }
+        protected readonly IDictionary<string, Screen> Screens = new Dictionary<string, Screen>();
+        protected string CurrentScreenKey { get; set; }
 
-        public Screen CurrentScreen => Screens[CurrentScreenIndex];
+        public Screen CurrentScreen => Screens[CurrentScreenKey];
 
         public void AddBall(Ball ball)
         {

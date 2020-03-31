@@ -29,6 +29,7 @@ namespace Ricochet.Levels
         public Level1() : base(Configuration.ScreenWidth, Configuration.ScreenHeight, Configuration.TileDimension)
         {
             AddScreen(
+                "initial",
                 @"CCCCPPCCCCCC    BBBBBBBBBB",
                 @"    CC              \BBBBB",
                 @"                      \BBB",
@@ -40,6 +41,7 @@ namespace Ricochet.Levels
                 @"PPPPCC    BBBBBBBBBBBBBBBB"
             );
             AddScreen(
+                "initial-left",
                 @"                          ",
                 @"                          ",
                 @"                          ",
@@ -51,6 +53,7 @@ namespace Ricochet.Levels
                 @"PP                        "
             );
             AddScreen(
+                "initial-right",
                 @"                          ",
                 @"                          ",
                 @"                          ",
@@ -62,6 +65,7 @@ namespace Ricochet.Levels
                 @"  PP                      "
             );
             AddScreen(
+                "initial-top",
                 @"                          ",
                 @"                          ",
                 @"                          ",
@@ -73,6 +77,7 @@ namespace Ricochet.Levels
                 @"    PP                    "
             );
             AddScreen(
+                "initial-bottom",
                 @"                          ",
                 @"                          ",
                 @"                          ",
@@ -84,32 +89,32 @@ namespace Ricochet.Levels
                 @"      PP                  "
             );
 
-            CurrentScreenIndex = 0;
+            CurrentScreenKey = "initial";
         }
 
-        private void AddScreen(params string[] layout)
+        private void AddScreen(string key, params string[] layout)
         {
-            Screens.Add(GenerateLayout(layout, _mappings));
+            Screens.Add(key, GenerateLayout(layout, _mappings));
         }
 
         public override void MoveBallToScreen(Side side)
         {
-            switch (CurrentScreenIndex)
+            switch (CurrentScreenKey)
             {
-                case 0:
+                case "initial":
                     switch (side)
                     {
                         case Side.Left:
-                            CurrentScreenIndex =  1;
+                            CurrentScreenKey =  "initial-left";
                             break;
                         case Side.Right:
-                            CurrentScreenIndex =  2;
+                            CurrentScreenKey =  "initial-right";
                             break;
                         case Side.Top:
-                            CurrentScreenIndex =  3;
+                            CurrentScreenKey =  "initial-top";
                             break;
                         case Side.Bottom:
-                            CurrentScreenIndex =  4;
+                            CurrentScreenKey =  "initial-bottom";
                             break;
                         default:
                             throw new ArgumentOutOfRangeException(nameof(side), side, null);
@@ -117,7 +122,7 @@ namespace Ricochet.Levels
 
                     break;
                 default:
-                    CurrentScreenIndex =  0;
+                    CurrentScreenKey =  "initial";
                     break;
             }
         }
