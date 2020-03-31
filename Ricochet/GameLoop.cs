@@ -15,7 +15,7 @@ namespace Ricochet
         { 
             _ball = new Ball(Configuration.BallRadius, Configuration.Gravity);
 
-            _currentLevel = new Level1(Configuration.ScreenWidth / Configuration.TileDimension, Configuration.ScreenHeight / Configuration.TileDimension);
+            _currentLevel = new Level1();
             _currentLevel.AddBall(_ball);
         }
 

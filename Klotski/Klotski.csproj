@@ -37,8 +37,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Elements\Ball.cs" />
+    <Compile Include="Elements\BottomLeftTriangleTile.cs" />
+    <Compile Include="Elements\BottomRightTriangleTile.cs" />
     <Compile Include="Elements\Screen.cs" />
     <Compile Include="Elements\SquareTile.cs" />
+    <Compile Include="Elements\TileBase.cs" />
+    <Compile Include="Elements\TileFactory.cs" />
+    <Compile Include="Elements\TopLeftTriangleTile.cs" />
+    <Compile Include="Elements\TopRightTriangleTile.cs" />
     <Compile Include="GameLoopBase.cs" />
     <Compile Include="GameLoopWrapper.cs" />
     <Compile Include="Helpers\Geometry.cs" />
