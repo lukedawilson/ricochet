@@ -13,6 +13,7 @@ namespace Ricochet.Levels
         private const string Bricks2TriangleBottomRight = "bricks2_triangle_bottom_right.png";
         private const string Bricks2TriangleTopLeft = "bricks2_triangle_top_left.png";
         private const string Bricks2TriangleTopRight = "bricks2_triangle_top_right.png";
+        private const string sand_ground1 = "sand_ground1.png";
 
         protected override IDictionary<string, TileFactory> Mappings => new Dictionary<string, TileFactory>
         {
@@ -23,6 +24,7 @@ namespace Ricochet.Levels
             { @"B/", new TileFactory<TopLeftTriangleTile>(Bricks2TriangleTopLeft) },
             { @"\B", new TileFactory<TopRightTriangleTile>(Bricks2TriangleTopRight) },
             { @"B\", new TileFactory<BottomLeftTriangleTile>(Bricks2TriangleBottomLeft) },
+            { @"SS", new TileFactory<BottomLeftTriangleTile>(sand_ground1) },
         };
 
         public Level1() : base(Configuration.ScreenWidth, Configuration.ScreenHeight, Configuration.TileDimension)
@@ -41,51 +43,51 @@ namespace Ricochet.Levels
             );
             AddScreen(
                 "initial-left",
-                @"PPPPPPPPPPPPPPPPPPPPPPPPPP",
+                @"PP      /BBBBBBBBBBBBBBBBB",
+                @"PP    /BBBBBB/          B/",
+                @"PP    \BBBB/          BB  ",
+                @"PP                BBBBB/  ",
+                @"PP            BBBBBBB/    ",
                 @"PP                        ",
-                @"PP                        ",
-                @"PP                        ",
-                @"PP                        ",
-                @"PP                        ",
-                @"PP                        ",
-                @"PP                        ",
-                @"PPPPPPPPPPPPPPPPPPPPPPPPPP"
+                @"PP      CC                ",
+                @"PP    CCCCCC        CCCCCC",
+                @"SSSSCCCCCCCCCCCCCCCCCCPPPP"
             );
             AddScreen(
                 "initial-right",
-                @"PPPPPPPPPPPPPPPPPPPPPPPPPP",
-                @"                        PP",
-                @"                        PP",
-                @"                        PP",
-                @"                        PP",
-                @"                        PP",
-                @"                        PP",
-                @"                        PP",
-                @"PPPPPPPPPPPPPPPPPPPPPPPPPP"
+                @"CCCCCCCCCCCCCCCCCCCCCCCCCC",
+                @"CC                      PP",
+                @"CC            CCCCCCCCCCCC",
+                @"            CCCCCCCC      ",
+                @"          CCCCCCCC    CCCC",
+                @"      CC  CCCCCCCC        ",
+                @"CCCCCCCCCCCC          CCCC",
+                @"PPPPCC              CCCCCC",
+                @"PPPPCC  CCCCCCCCCCCCCCPPPP"
             );
             AddScreen(
                 "initial-top",
-                @"PPPPPPPPPPPPPPPPPPPPPPPPPP",
-                @"PP                      PP",
-                @"PP                      PP",
-                @"PP                      PP",
-                @"PP                      PP",
-                @"PP                      PP",
-                @"PP                      PP",
-                @"PP                      PP",
-                @"PP                      PP"
+                @"CCPPCCCCCCCCCC  CCCCCCCCCC",
+                @"CC          CC            ",
+                @"CC          CC      CCCCCC",
+                @"CC          CC    CC    PP",
+                @"CC          CC  CC      PP",
+                @"CCCCCC      CCCCCC      CC",
+                @"CCCCCCCC              CCCC",
+                @"PP                  CCCCCC",
+                @"CCCCCCCCCCCC    CCCCCCCCCC"
             );
             AddScreen(
                 "initial-bottom",
-                @"PP                      PP",
-                @"PP                      PP",
-                @"PP                      PP",
-                @"PP                      PP",
-                @"PP                      PP",
-                @"PP                      PP",
-                @"PP                      PP",
-                @"PP                      PP",
-                @"PPPPPPPPPPPPPPPPPPPPPPPPPP"
+                @"CCCCCC    CCCCCCCCCCCCCCCC",
+                @"CCCC      CC            PP",
+                @"CC        CC      CCCCCCCC",
+                @"PP        CC            CC",
+                @"PP        CCCCCCCC      CC",
+                @"CC                      CC",
+                @"CCCC                  CCCC",
+                @"CCCCCC              CCCCCC",
+                @"CCCCCCCCCCCCCCCCCCCCPPPPPP"
             );
 
             CurrentScreenKey = "initial";
