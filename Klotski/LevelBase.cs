@@ -62,12 +62,12 @@ namespace Klotski
             CurrentScreen.Draw();
         }
 
-        protected void AddScreen(string key, params string[] layout)
+        protected void AddScreen(string key, IDictionary<string, TileFactory> mappings, params string[] layout)
         {
-            Screens.Add(key, GenerateLayout(layout, Mappings));
+            Screens.Add(key, GenerateLayout(layout, mappings));
         }
 
-        protected Screen GenerateLayout(IReadOnlyList<string> layout, IDictionary<string, TileFactory> mappings)
+        private Screen GenerateLayout(IReadOnlyList<string> layout, IDictionary<string, TileFactory> mappings)
         {
             if (layout.Count != _verticalTiles)
                 throw new ArgumentException($"Must have {_verticalTiles} rows");
@@ -96,9 +96,7 @@ namespace Klotski
             return screen;
         }
 
-        protected abstract IDictionary<string, TileFactory> Mappings { get; }
-
-        // ToDo: implement this
+        // ToDo: implement these mappings
         //            var layout1 = new[]
         //            {
         //                @"CCPCCC  BBBBB",

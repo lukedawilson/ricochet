@@ -6,31 +6,23 @@ namespace Ricochet.Levels
 {
     public class Level1 : LevelBase
     {
-        private const string Pipes1 = "pipes1.png";
-        private const string Checker2 = "checker2.png";
-        private const string Bricks2 = "bricks2.png";
-        private const string Bricks2TriangleBottomLeft = "bricks2_triangle_bottom_left.png";
-        private const string Bricks2TriangleBottomRight = "bricks2_triangle_bottom_right.png";
-        private const string Bricks2TriangleTopLeft = "bricks2_triangle_top_left.png";
-        private const string Bricks2TriangleTopRight = "bricks2_triangle_top_right.png";
-        private const string SandGround1 = "sand_ground1.png";
-
-        protected override IDictionary<string, TileFactory> Mappings => new Dictionary<string, TileFactory>
+        private IDictionary<string, TileFactory> LightBlueMappings => new Dictionary<string, TileFactory>
         {
-            { @"CC", new TileFactory<SquareTile>(Checker2) },
-            { @"PP", new TileFactory<SquareTile>(Pipes1) },
-            { @"BB", new TileFactory<SquareTile>(Bricks2) },
-            { @"/B", new TileFactory<BottomRightTriangleTile>(Bricks2TriangleBottomRight) },
-            { @"B/", new TileFactory<TopLeftTriangleTile>(Bricks2TriangleTopLeft) },
-            { @"\B", new TileFactory<TopRightTriangleTile>(Bricks2TriangleTopRight) },
-            { @"B\", new TileFactory<BottomLeftTriangleTile>(Bricks2TriangleBottomLeft) },
-            { @"SS", new TileFactory<BottomLeftTriangleTile>(SandGround1) },
+            { @"CC", new TileFactory<SquareTile>("checker2.png") },
+            { @"PP", new TileFactory<SquareTile>("pipes1.png") },
+            { @"BB", new TileFactory<SquareTile>("bricks2.png") },
+            { @"/B", new TileFactory<BottomRightTriangleTile>("bricks2_triangle_bottom_right.png") },
+            { @"B/", new TileFactory<TopLeftTriangleTile>("bricks2_triangle_top_left.png") },
+            { @"\B", new TileFactory<TopRightTriangleTile>("bricks2_triangle_top_right.png") },
+            { @"B\", new TileFactory<BottomLeftTriangleTile>("bricks2_triangle_bottom_left.png") },
+            { @"SS", new TileFactory<BottomLeftTriangleTile>("sand_ground1.png") },
         };
 
         public Level1() : base(Configuration.ScreenWidth, Configuration.ScreenHeight, Configuration.TileDimension)
         {
             AddScreen(
                 "initial",
+                LightBlueMappings,
                 @"CCCCPPCCCCCC    BBBBBBBBBB",
                 @"    CC              \BBBBB",
                 @"                      \BBB",
@@ -43,6 +35,7 @@ namespace Ricochet.Levels
             );
             AddScreen(
                 "initial-left",
+                LightBlueMappings,
                 @"PP      /BBBBBBBBBBBBBBBBB",
                 @"PP    /BBBBBB/          B/",
                 @"PP    \BBBB/          BB  ",
@@ -55,6 +48,7 @@ namespace Ricochet.Levels
             );
             AddScreen(
                 "initial-right",
+                LightBlueMappings,
                 @"CCCCCCCCCCCCCCCCCCCCCCCCCC",
                 @"CC                      PP",
                 @"CC            CCCCCCCCCCCC",
@@ -67,6 +61,7 @@ namespace Ricochet.Levels
             );
             AddScreen(
                 "initial-top",
+                LightBlueMappings,
                 @"CCPPCCCCCCCCCC  CCCCCCCCCC",
                 @"CC          CC            ",
                 @"CC          CC      CCCCCC",
@@ -79,6 +74,7 @@ namespace Ricochet.Levels
             );
             AddScreen(
                 "initial-bottom",
+                LightBlueMappings,
                 @"CCCCCC    CCCCCCCCCCCCCCCC",
                 @"CCCC      CC            PP",
                 @"CC        CC      CCCCCCCC",
