@@ -13,7 +13,7 @@ namespace Ricochet.Levels
         private const string Bricks2TriangleBottomRight = "bricks2_triangle_bottom_right.png";
         private const string Bricks2TriangleTopLeft = "bricks2_triangle_top_left.png";
         private const string Bricks2TriangleTopRight = "bricks2_triangle_top_right.png";
-        private const string sand_ground1 = "sand_ground1.png";
+        private const string SandGround1 = "sand_ground1.png";
 
         protected override IDictionary<string, TileFactory> Mappings => new Dictionary<string, TileFactory>
         {
@@ -24,7 +24,7 @@ namespace Ricochet.Levels
             { @"B/", new TileFactory<TopLeftTriangleTile>(Bricks2TriangleTopLeft) },
             { @"\B", new TileFactory<TopRightTriangleTile>(Bricks2TriangleTopRight) },
             { @"B\", new TileFactory<BottomLeftTriangleTile>(Bricks2TriangleBottomLeft) },
-            { @"SS", new TileFactory<BottomLeftTriangleTile>(sand_ground1) },
+            { @"SS", new TileFactory<BottomLeftTriangleTile>(SandGround1) },
         };
 
         public Level1() : base(Configuration.ScreenWidth, Configuration.ScreenHeight, Configuration.TileDimension)
