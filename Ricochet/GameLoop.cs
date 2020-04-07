@@ -1,5 +1,6 @@
 ﻿using Klotski;
 using Klotski.Elements;
+using Ricochet.Elements;
 using Ricochet.Levels;
 
 namespace Ricochet
@@ -16,7 +17,7 @@ namespace Ricochet
             _ball = new Ball(Configuration.BallRadius, Configuration.Gravity);
 
             _currentLevel = new Level1();
-            _currentLevel.AddBall(_ball);
+            _currentLevel.AddPlayer(_ball);
         }
 
         public override void UnloadContent()

@@ -1,36 +1,31 @@
 ﻿using System;
 using System.Linq;
+using Klotski;
+using Klotski.Elements;
 using Klotski.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Point = Klotski.Helpers.Point;
 
-namespace Klotski.Elements
+namespace Ricochet.Elements
 {
     /// <summary>
     /// Class to keep track of a ball's location and vector.
     /// </summary>
-    public class Ball
+    public class Ball : CharacterBase
     {
         private const double MaxBounceMultiplier = 12.0;
         private const double ChangeX = 0.5;
         private const double ChangeY = 2.0;
         private const double FloatTolerance = 0.001;
 
-        public LevelBase CurrentLevel { get; set; }
-        public double X { get; set; }
-        public double Y { get; set; }
-
-        public readonly int BallRadius;
+        private int BallRadius => Dimension / 2;
 
         private readonly double _gravity;
 
         private double _changeX;
         private double _changeY;
         
-        public Ball(int ballRadius, double gravity)
+        public Ball(int ballRadius, double gravity) : base(ballRadius * 2)
         {
-            BallRadius = ballRadius;
             _gravity = gravity;
         }
 
@@ -55,24 +50,7 @@ namespace Klotski.Elements
             if (collision) _changeY += ChangeY * Math.Min(ticks, MaxBounceMultiplier);
         }
 
-        public void Draw()
-        {
-            UpdateBallPosition();
-
-            var yFromTop = CurrentLevel.ScreenHeight - Y;
-            var position = new Vector2((float)(X - BallRadius), (float)(yFromTop - BallRadius));
-
-            var diameter = BallRadius * 2;
-            var colorData = Circle(diameter, Color.Red, Color.Transparent);
-            var texture = new Texture2D(GameLoopBase.GraphicsDevice, diameter, diameter);
-            texture.SetData(colorData);
-            
-            GameLoopBase.SpriteBatch.Begin();
-            GameLoopBase.SpriteBatch.Draw(texture, position, null, Color.White);
-            GameLoopBase.SpriteBatch.End();
-        }
-
-        private void UpdateBallPosition()
+        protected override void UpdatePosition()
         {
             var potentialX = X + _changeX;
             var potentialY = Y + _changeY;
@@ -169,7 +147,7 @@ namespace Klotski.Elements
             if (side.HasValue)
             {
                 CurrentLevel.MoveBallToScreen(side.Value);
-                CurrentLevel.InitialiseBallPosition(side.Value, this);
+                CurrentLevel.InitialisePlayerPosition(side.Value, this);
             }
         }
 
@@ -181,33 +159,6 @@ namespace Klotski.Elements
             var trajectory = new Line(X, Y, potentialX + xDirection * BallRadius, potentialY + yDirection * BallRadius);
             var intersection = Geometry.GetIntersection(trajectory, wall);
             return intersection;
-        }
-
-        private static Color[] Circle(int diameter, Color fillColour, Color backgroundColour)
-        {
-            var colorData = new Color[diameter * diameter];
-
-            var radius = diameter / 2f;
-            var radiusSq = radius * radius;
-
-            for (var x = 0; x < diameter; x++)
-            {
-                for (var y = 0; y < diameter; y++)
-                {
-                    var index = x * diameter + y;
-                    var pos = new Vector2(x - radius, y - radius);
-                    if (pos.LengthSquared() <= radiusSq)
-                    {
-                        colorData[index] = fillColour;
-                    }
-                    else
-                    {
-                        colorData[index] = backgroundColour;
-                    }
-                }
-            }
-
-            return colorData;
         }
     }
 }

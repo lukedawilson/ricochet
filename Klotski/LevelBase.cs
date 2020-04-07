@@ -29,14 +29,14 @@ namespace Klotski
 
         public Screen CurrentScreen => Screens[CurrentScreenKey];
 
-        public void AddBall(Ball ball)
+        public void AddPlayer(CharacterBase ball)
         {
             ball.CurrentLevel = this;
             ball.X = ScreenWidth / 2.0;
-            ball.Y = ScreenHeight - ball.BallRadius - 150;
+            ball.Y = ScreenHeight - ball.Dimension/2.0 - 150;
         }
 
-        public virtual void InitialiseBallPosition(Side side, Ball ball)
+        public virtual void InitialisePlayerPosition(Side side, CharacterBase ball)
         {
             switch (side)
             {
