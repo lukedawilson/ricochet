@@ -181,7 +181,7 @@ namespace Ricochet.Levels
                 @"SSSSCCCCCCCCCCCCCCCCCCPPPP"
             );
             AddScreen(
-                "initial",
+                "M",
                 LightBlueMappings,
                 @"CCCCPPCCCCCC    BBBBBBBBBB",
                 @"    CC              \BBBBB",
@@ -242,7 +242,7 @@ namespace Ricochet.Levels
                 @"CC  CCCCCCCCCCCCCC  CCCCCC",
                 @"CC  CC        CCCC      CC",
                 @"CC  CCCC      CC    CCCCCC",
-                @"CC    CCCCC   CC  CCCCCCCC",
+                @"CC    CCCC    CC  CCCCCCCC",
                 @"CCCCCCCCCCCC  CC  CCCCCCCC"
             );
             AddScreen(
@@ -351,14 +351,14 @@ namespace Ricochet.Levels
             );
 
 
-            CurrentScreenKey = "initial";
+            CurrentScreenKey = "M";
         }
 
         protected override string[,] ScreensLayout => new[,]
         {
             {   "LLTT",     "LTT",      "TT",       "RTT",      "RRTT" },
             {   "LLT",      "LT",       "T",        "RT",       "RRT"  },
-            {   "LL",       "L",        "Initial",  "R",        "RR"   },
+            {   "LL",       "L",        "M",        "R",        "RR"   },
             {   "LLB",      "LB",       "B",        "RB",       "RRB"  },
             {   "LLBB",     "LBB",      "BB",       "RBB",      "RRBB" }
         };

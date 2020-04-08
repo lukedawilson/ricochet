@@ -92,7 +92,7 @@ namespace Klotski
 
         protected abstract string[,] ScreensLayout { get; }
 
-        public virtual void MoveBallToScreen(Side side, Point intersection)
+        public virtual void MoveBallToScreen(Side side)
         {
             for (var yy = 0; yy < ScreensLayout.GetLength(0); yy++)
             {

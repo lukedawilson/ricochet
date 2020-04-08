@@ -223,7 +223,7 @@ namespace Ricochet.Elements
             if (side.HasValue)
             {
                 var intersection = Geometry.GetIntersection(trajectory, boundary);
-                CurrentLevel.MoveBallToScreen(side.Value, intersection);
+                CurrentLevel.MoveBallToScreen(side.Value);
                 CurrentLevel.InitialisePlayerPosition(side.Value, intersection, this);
             }
         }
