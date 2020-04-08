@@ -15,7 +15,7 @@ namespace Ricochet.Levels
             { @"B/", new TileFactory<TopLeftTriangleTile>("bricks2_triangle_top_left.png") },
             { @"\B", new TileFactory<TopRightTriangleTile>("bricks2_triangle_top_right.png") },
             { @"B\", new TileFactory<BottomLeftTriangleTile>("bricks2_triangle_bottom_left.png") },
-            { @"SS", new TileFactory<BottomLeftTriangleTile>("sand_ground1.png") },
+            { @"SS", new TileFactory<SquareTile>("sand_ground1.png") },
         };
 
         public Level1() : base(Configuration.ScreenWidth, Configuration.ScreenHeight, Configuration.TileDimension)
