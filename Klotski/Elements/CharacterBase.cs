@@ -5,8 +5,11 @@ namespace Klotski.Elements
 {
     public abstract class CharacterBase
     {
-        protected CharacterBase(int dimension)
+        private readonly string _image;
+
+        protected CharacterBase(int dimension, string image)
         {
+            _image = image;
             Dimension = dimension;
         }
 
@@ -23,41 +26,13 @@ namespace Klotski.Elements
             var yFromTop = CurrentLevel.ScreenHeight - Y;
             var position = new Vector2((float)(X - Dimension/2.0), (float)(yFromTop - Dimension/2.0));
 
-            var diameter = Dimension;
-            var colorData = Circle(diameter, Color.Red, Color.Transparent);
-            var texture = new Texture2D(GameLoopBase.GraphicsDevice, diameter, diameter);
-            texture.SetData(colorData);
+            Texture2D texture;
+            using (var stream = TitleContainer.OpenStream($"Content/img/{_image}")) // ToDo: this should be done using a `Content.mgcb` file, but I couldn't get it to work
+                texture = Texture2D.FromStream(GameLoopBase.GraphicsDevice, stream);
 
             GameLoopBase.SpriteBatch.Begin();
             GameLoopBase.SpriteBatch.Draw(texture, position, null, Color.White);
             GameLoopBase.SpriteBatch.End();
-        }
-
-        private static Color[] Circle(int diameter, Color fillColour, Color backgroundColour)
-        {
-            var colorData = new Color[diameter * diameter];
-
-            var radius = diameter / 2f;
-            var radiusSq = radius * radius;
-
-            for (var x = 0; x < diameter; x++)
-            {
-                for (var y = 0; y < diameter; y++)
-                {
-                    var index = x * diameter + y;
-                    var pos = new Vector2(x - radius, y - radius);
-                    if (pos.LengthSquared() <= radiusSq)
-                    {
-                        colorData[index] = fillColour;
-                    }
-                    else
-                    {
-                        colorData[index] = backgroundColour;
-                    }
-                }
-            }
-
-            return colorData;
         }
     }
 }

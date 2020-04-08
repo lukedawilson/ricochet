@@ -14,7 +14,7 @@ namespace Ricochet
 
         public override void LoadContent()
         { 
-            _ball = new Ball(Configuration.BallRadius, Configuration.Gravity);
+            _ball = new Ball(Configuration.BallDiameter, Configuration.Gravity);
 
             _currentLevel = new Level1();
             _currentLevel.AddPlayer(_ball);

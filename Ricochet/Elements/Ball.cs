@@ -24,7 +24,8 @@ namespace Ricochet.Elements
         private double _changeX;
         private double _changeY;
         
-        public Ball(int ballRadius, double gravity) : base(ballRadius * 2)
+        public Ball(int ballDiameter, double gravity)
+            : base(ballDiameter, "sprite_n.png")
         {
             _gravity = gravity;
         }
