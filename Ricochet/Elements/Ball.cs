@@ -16,6 +16,7 @@ namespace Ricochet.Elements
         private const double ChangeX = 0.5;
         private const double ChangeY = 2.0;
         private const double FloatTolerance = 0.001;
+        private const double Friction = 1.1;
 
         private int BallRadius => Dimension / 2;
 
@@ -65,9 +66,11 @@ namespace Ricochet.Elements
                                where intersection != null
                                let distance = Geometry.GetDistance(new Point(potentialX, potentialY), intersection)
                                orderby distance
-                               select new { Tile = tile, Wall = wall };
+                               select new { Tile = tile, Wall = wall, intersection, distance };
             var closest = intersecting.FirstOrDefault();
 
+            var collisionX = false;
+            var collisionY = false;
             if (closest != null)
             {
                 var wall = closest.Wall;
@@ -85,6 +88,7 @@ namespace Ricochet.Elements
                     }
 
                     _changeX = 0;
+                    collisionX = true;
                 }
                 else if (Math.Abs(wall.Y1 - wall.Y2) < FloatTolerance) // horizontal wall
                 {
@@ -98,6 +102,7 @@ namespace Ricochet.Elements
                     }
 
                     _changeY = 0;
+                    collisionY = true;
                 }
                 else // diagonal wall
                 {
@@ -130,14 +135,18 @@ namespace Ricochet.Elements
 
                     _changeX = 0;
                     _changeY = 0;
+                    collisionX = true;
+                    collisionY = true;
                 }
             }
-            else
-            {
-                // If no collision, move ball normally
-                X = potentialX;
+
+            // If no collision, move ball normally
+            if (!collisionX) X = potentialX;
+
+            if (!collisionY)
                 Y = potentialY;
-            }
+            else
+                _changeX /= Friction;
 
             // Apply gravity
             if (Math.Abs(_changeY) > 1 || Y < CurrentLevel.ScreenHeight - BallRadius)
