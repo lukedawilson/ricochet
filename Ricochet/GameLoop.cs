@@ -1,5 +1,6 @@
 ﻿using Klotski;
 using Klotski.Elements;
+using Ricochet.Elements;
 using Ricochet.Levels;
 
 namespace Ricochet
@@ -13,17 +14,15 @@ namespace Ricochet
 
         public override void LoadContent()
         { 
-            _ball = new Ball(Configuration.BallRadius, Configuration.Gravity);
+            _ball = new Ball(Configuration.BallDiameter, Configuration.Gravity);
 
             _currentLevel = new Level1();
-            _currentLevel.AddBall(_ball);
+            _currentLevel.AddPlayer(_ball);
         }
 
         public override void UnloadContent()
         {
         }
-
-        private int? _downArrowDownTicks = 0;
 
         public override void Update()
         {
@@ -33,13 +32,11 @@ namespace Ricochet
 
             if (IsDownArrowDown())
             {
-                _downArrowDownTicks = _downArrowDownTicks ?? 0;
-                _downArrowDownTicks++;
+                _ball.Squeeze();
             }
-            else if (_downArrowDownTicks.HasValue)
+            else if (_ball.Bouncing)
             {
-                _ball.Bounce(_downArrowDownTicks.Value);
-                _downArrowDownTicks = null;
+                _ball.Bounce();
             }
         }
 

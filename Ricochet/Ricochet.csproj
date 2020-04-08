@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="Elements\Ball.cs" />
     <Compile Include="GameLoop.cs" />
     <Compile Include="Levels\Level1.cs" />
     <Compile Include="Program.cs" />
