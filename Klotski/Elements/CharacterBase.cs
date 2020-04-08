@@ -24,7 +24,7 @@ namespace Klotski.Elements
             UpdatePosition();
 
             var yFromTop = CurrentLevel.ScreenHeight - Y;
-            var position = new Vector2((float)(X - Dimension/2.0), (float)(yFromTop - Dimension/2.0));
+            var position = new Rectangle((int)X - Dimension/2, (int)yFromTop - Dimension/2, Dimension, Dimension);
 
             Texture2D texture;
             using (var stream = TitleContainer.OpenStream($"Content/img/{_image}")) // ToDo: this should be done using a `Content.mgcb` file, but I couldn't get it to work

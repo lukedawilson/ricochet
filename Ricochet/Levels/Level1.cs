@@ -20,6 +20,7 @@ namespace Ricochet.Levels
             { @"\B", new TileFactory<TopRightTriangleTile>("bricks2_TR.png") },
             { @"B\", new TileFactory<BottomLeftTriangleTile>("bricks2_BL.png") },
             { @"SS", new TileFactory<SquareTile>("sand_ground1.png") },
+            { @"NN", new TileFactory<NonCollidingTile>("pillar_b1.png") },
         };
 
         public Level1() : base(Configuration.ScreenWidth, Configuration.ScreenHeight, Configuration.TileDimension)
@@ -187,7 +188,7 @@ namespace Ricochet.Levels
                 @"    CC              \BBBBB",
                 @"                      \BBB",
                 @"                          ",
-                @"                          ",
+                @"            NN            ",
                 @"    CCCCCCCCCC    BBB\    ",
                 @"    CC            BBBBBBBB",
                 @"CCCCCC          /BBBBBBBBB",

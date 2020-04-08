@@ -39,6 +39,7 @@
     <Compile Include="Elements\BottomLeftTriangleTile.cs" />
     <Compile Include="Elements\BottomRightTriangleTile.cs" />
     <Compile Include="Elements\CharacterBase.cs" />
+    <Compile Include="Elements\NonCollidingTile.cs" />
     <Compile Include="Elements\Screen.cs" />
     <Compile Include="Elements\SquareTile.cs" />
     <Compile Include="Elements\TileBase.cs" />
