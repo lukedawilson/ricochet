@@ -57,80 +57,82 @@ namespace Ricochet.Elements
             var potentialY = Y + _changeY;
 
             // Apply collision logic to tiles
-            var collision = false;
-            foreach (var tile in CurrentLevel.CurrentScreen.Tiles)
+            var intersecting = from tile in CurrentLevel.CurrentScreen.Tiles
+                               from wall in tile.Boundary
+                               let intersection = GetIntersection(potentialX, potentialY, wall)
+                               where intersection != null
+                               let distance = Geometry.GetDistance(new Point(potentialX, potentialY), intersection)
+                               orderby distance
+                               select new { Tile = tile, Wall = wall };
+            var closest = intersecting.FirstOrDefault();
+
+            if (closest != null)
             {
-                foreach (var wall in tile.Boundary)
+                var wall = closest.Wall;
+                var tile = closest.Tile;
+
+                if (Math.Abs(wall.X1 - wall.X2) < FloatTolerance) // vertical wall
                 {
-                    if (GetIntersection(potentialX, potentialY, wall) == null)
-                        continue;
-
-                    collision = true;
-
-                    if (Math.Abs(wall.X1 - wall.X2) < FloatTolerance) // vertical wall
+                    if (X < wall.X1 && tile.Boundary.All(w => w.X1 >= wall.X1 && w.X2 >= wall.X1)) // ball --> wall
                     {
-                        if (X < wall.X1 && tile.Boundary.All(w => w.X1 >= wall.X1 && w.X2 >= wall.X1)) // ball --> wall
-                        {
-                            X = wall.X1 - BallRadius;
-                        }
-                        else if (tile.Boundary.All(w => w.X1 <= wall.X1 && w.X2 <= wall.X1)) // wall <-- ball
-                        {
-                            X = wall.X1 + BallRadius;
-                        }
-
-                        _changeX = 0;
+                        X = wall.X1 - BallRadius;
                     }
-                    else if (Math.Abs(wall.Y1 - wall.Y2) < FloatTolerance) // horizontal wall
+                    else if (tile.Boundary.All(w => w.X1 <= wall.X1 && w.X2 <= wall.X1)) // wall <-- ball
                     {
-                        if (Y < wall.Y1 && tile.Boundary.All(w => w.Y1 >= wall.Y1 && w.Y2 >= wall.Y1)) // ball ^^ wall
-                        {
-                            Y = wall.Y1 - BallRadius;
-                        }
-                        else if (tile.Boundary.All(w => w.Y1 <= wall.Y1 && w.Y2 <= wall.Y1))
-                        {
-                            Y = wall.Y1 + BallRadius;
-                        }
-
-                        _changeY = 0;
+                        X = wall.X1 + BallRadius;
                     }
-                    else // diagonal wall
+
+                    _changeX = 0;
+                }
+                else if (Math.Abs(wall.Y1 - wall.Y2) < FloatTolerance) // horizontal wall
+                {
+                    if (Y < wall.Y1 && tile.Boundary.All(w => w.Y1 >= wall.Y1 && w.Y2 >= wall.Y1)) // ball ^^ wall
                     {
-                        if (wall.Y1 > wall.Y2) // diagonal \
-                        {
-                            if (tile.Boundary.All(w => w.X1 <= wall.X2 && w.X2 <= wall.X2)) // bottom-left filled in
-                            {
-                                X += BallRadius;
-                                Y += BallRadius;
-                            }
-                            else // top-right filled in
-                            {
-                                X -= BallRadius;
-                                Y -= BallRadius;
-                            }
-                        }
-                        else if (wall.Y1 < wall.Y2) // diagonal /
-                        {
-                            if (tile.Boundary.All(w => w.X1 <= wall.X1 && w.X2 <= wall.X1)) // top-left filled in
-                            {
-                                X += BallRadius;
-                                Y -= BallRadius;
-                            }
-                            else // bottom-right filled in
-                            {
-                                X -= BallRadius;
-                                Y += BallRadius;
-                            }
-                        }
-
-                        _changeX = 0;
-                        _changeY = 0;
+                        Y = wall.Y1 - BallRadius;
                     }
+                    else if (tile.Boundary.All(w => w.Y1 <= wall.Y1 && w.Y2 <= wall.Y1))
+                    {
+                        Y = wall.Y1 + BallRadius;
+                    }
+
+                    _changeY = 0;
+                }
+                else // diagonal wall
+                {
+                    if (wall.Y1 > wall.Y2) // diagonal \
+                    {
+                        if (tile.Boundary.All(w => w.X1 <= wall.X2 && w.X2 <= wall.X2)) // bottom-left filled in
+                        {
+                            X += BallRadius;
+                            Y += BallRadius;
+                        }
+                        else // top-right filled in
+                        {
+                            X -= BallRadius;
+                            Y -= BallRadius;
+                        }
+                    }
+                    else if (wall.Y1 < wall.Y2) // diagonal /
+                    {
+                        if (tile.Boundary.All(w => w.X1 <= wall.X1 && w.X2 <= wall.X1)) // top-left filled in
+                        {
+                            X += BallRadius;
+                            Y -= BallRadius;
+                        }
+                        else // bottom-right filled in
+                        {
+                            X -= BallRadius;
+                            Y += BallRadius;
+                        }
+                    }
+
+                    _changeX = 0;
+                    _changeY = 0;
                 }
             }
-
-            // If no collision, move ball normally
-            if (!collision)
+            else
             {
+                // If no collision, move ball normally
                 X = potentialX;
                 Y = potentialY;
             }
