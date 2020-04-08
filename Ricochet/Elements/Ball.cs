@@ -44,9 +44,10 @@ namespace Ricochet.Elements
         {
             var potentialX = X + _changeX;
             var potentialY = Y + _changeY;
+            var trajectory = GetTrajectory(potentialX, potentialY);
             var collision = CurrentLevel.CurrentScreen.Tiles.Any(
                 tile => tile.Boundary.Any(
-                    wall => GetIntersection(potentialX, potentialY, wall) != null));
+                    wall => Geometry.GetIntersection(trajectory, wall) != null));
 
             if (collision) _changeY += ChangeY * Math.Min(ticks, MaxBounceMultiplier);
         }
@@ -55,11 +56,12 @@ namespace Ricochet.Elements
         {
             var potentialX = X + _changeX;
             var potentialY = Y + _changeY;
+            var trajectory = GetTrajectory(potentialX, potentialY);
 
             // Apply collision logic to tiles
             var intersecting = from tile in CurrentLevel.CurrentScreen.Tiles
                                from wall in tile.Boundary
-                               let intersection = GetIntersection(potentialX, potentialY, wall)
+                               let intersection = Geometry.GetIntersection(trajectory, wall)
                                where intersection != null
                                let distance = Geometry.GetDistance(new Point(potentialX, potentialY), intersection)
                                orderby distance
@@ -143,25 +145,42 @@ namespace Ricochet.Elements
 
             // If edge of screen hit, switch screens and continue
             Side? side = null;
-            if (Y >= CurrentLevel.ScreenHeight) side = Side.Top;
-            if (Y <= 0) side = Side.Bottom;
-            if (X >= CurrentLevel.ScreenWidth) side = Side.Right;
-            if (X <= 0) side = Side.Left;
+            Line boundary = null;
+            if (Y >= CurrentLevel.ScreenHeight)
+            {
+                side = Side.Top;
+                boundary = new Line(0, CurrentLevel.ScreenHeight, CurrentLevel.ScreenWidth, CurrentLevel.ScreenHeight);
+            }
+            else if (Y <= 0)
+            {
+                side = Side.Bottom;
+                boundary = new Line(0, 0, CurrentLevel.ScreenWidth, 0);
+            }
+            else if (X >= CurrentLevel.ScreenWidth)
+            {
+                side = Side.Right;
+                boundary = new Line(CurrentLevel.ScreenWidth, 0, CurrentLevel.ScreenWidth, CurrentLevel.ScreenHeight);
+            }
+            else if (X <= 0)
+            {
+                side = Side.Left;
+                boundary = new Line(0, 0, 0, CurrentLevel.ScreenHeight);
+            }
+
             if (side.HasValue)
             {
-                CurrentLevel.MoveBallToScreen(side.Value);
-                CurrentLevel.InitialisePlayerPosition(side.Value, this);
+                var intersection = Geometry.GetIntersection(trajectory, boundary);
+                CurrentLevel.MoveBallToScreen(side.Value, intersection);
+                CurrentLevel.InitialisePlayerPosition(side.Value, intersection, this);
             }
         }
 
-        private Point GetIntersection(double potentialX, double potentialY, Line wall)
+        private Line GetTrajectory(double potentialX, double potentialY)
         {
             var xDirection = Math.Abs(potentialX - X) < FloatTolerance ? 0 : (potentialX - X) / Math.Abs(potentialX - X);
             var yDirection = Math.Abs(potentialY - Y) < FloatTolerance ? 0 : (potentialY - Y) / Math.Abs(potentialY - Y);
 
-            var trajectory = new Line(X, Y, potentialX + xDirection * BallRadius, potentialY + yDirection * BallRadius);
-            var intersection = Geometry.GetIntersection(trajectory, wall);
-            return intersection;
+            return new Line(X, Y, potentialX + xDirection * BallRadius, potentialY + yDirection * BallRadius);
         }
     }
 }

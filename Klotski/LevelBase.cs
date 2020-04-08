@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Klotski.Elements;
+using Klotski.Helpers;
 
 namespace Klotski
 {
@@ -34,27 +35,6 @@ namespace Klotski
             ball.CurrentLevel = this;
             ball.X = ScreenWidth / 2.0;
             ball.Y = ScreenHeight - ball.Dimension/2.0 - 150;
-        }
-
-        public virtual void InitialisePlayerPosition(Side side, CharacterBase ball)
-        {
-            switch (side)
-            {
-                case Side.Left:
-                    ball.X = ScreenWidth;
-                    break;
-                case Side.Right:
-                    ball.X = 0;
-                    break;
-                case Side.Top:
-                    ball.Y = 0;
-                    break;
-                case Side.Bottom:
-                    ball.Y = ScreenHeight;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(side), side, null);
-            }
         }
 
         public void Draw()
@@ -112,7 +92,7 @@ namespace Klotski
 
         protected abstract string[,] ScreensLayout { get; }
 
-        public virtual void MoveBallToScreen(Side side)
+        public virtual void MoveBallToScreen(Side side, Point intersection)
         {
             for (var yy = 0; yy < ScreensLayout.GetLength(0); yy++)
             {
@@ -148,6 +128,31 @@ namespace Klotski
                     if (CurrentScreenKey == null) throw new ArgumentOutOfRangeException();
                     return;
                 }
+            }
+        }
+
+        public virtual void InitialisePlayerPosition(Side side, Point intersection, CharacterBase ball)
+        {
+            switch (side)
+            {
+                case Side.Left:
+                    ball.X = ScreenWidth;
+                    ball.Y = intersection.Y;
+                    break;
+                case Side.Right:
+                    ball.X = 0;
+                    ball.Y = intersection.Y;
+                    break;
+                case Side.Top:
+                    ball.X = intersection.X;
+                    ball.Y = 0;
+                    break;
+                case Side.Bottom:
+                    ball.X = intersection.X;
+                    ball.Y = ScreenHeight;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(side), side, null);
             }
         }
     }
