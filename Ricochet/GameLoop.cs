@@ -24,8 +24,6 @@ namespace Ricochet
         {
         }
 
-        private int? _downArrowDownTicks = 0;
-
         public override void Update()
         {
             if (IsLeftArrowDown()) _ball.SpinLeft();
@@ -34,13 +32,11 @@ namespace Ricochet
 
             if (IsDownArrowDown())
             {
-                _downArrowDownTicks = _downArrowDownTicks ?? 0;
-                _downArrowDownTicks++;
+                _ball.Squeeze();
             }
-            else if (_downArrowDownTicks.HasValue)
+            else if (_ball.Bouncing)
             {
-                _ball.Bounce(_downArrowDownTicks.Value);
-                _downArrowDownTicks = null;
+                _ball.Bounce();
             }
         }
 

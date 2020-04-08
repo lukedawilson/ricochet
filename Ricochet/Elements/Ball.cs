@@ -24,6 +24,9 @@ namespace Ricochet.Elements
 
         private double _changeX;
         private double _changeY;
+
+        private bool _collisionX;
+        private bool _collisionY;
         
         public Ball(int ballDiameter, double gravity)
             : base(ballDiameter, "sprite_n.png")
@@ -33,15 +36,43 @@ namespace Ricochet.Elements
 
         public void SpinLeft()
         {
-            _changeX -= ChangeX;
+            if (_downArrowTicks.HasValue)
+            {
+                _leftArrowTicks = _leftArrowTicks ?? 0;
+                _leftArrowTicks++;
+            }
+            else if (_collisionY)
+            {
+                _changeX -= ChangeX;
+            }
         }
 
         public void SpinRight()
         {
-            _changeX += ChangeX;
+            if (_downArrowTicks.HasValue)
+            {
+                _rightArrowTicks = _rightArrowTicks ?? 0;
+                _rightArrowTicks++;
+            }
+            if (_collisionY)
+            {
+                _changeX += ChangeX;
+            }
         }
 
-        public void Bounce(int ticks)
+        private int? _downArrowTicks;
+        private int? _leftArrowTicks;
+        private int? _rightArrowTicks;
+
+        public bool Bouncing => _downArrowTicks.HasValue;
+
+        public void Squeeze()
+        {
+            _downArrowTicks = _downArrowTicks ?? 0;
+            _downArrowTicks++;
+        }
+
+        public void Bounce()
         {
             var potentialX = X + _changeX;
             var potentialY = Y + _changeY;
@@ -50,7 +81,15 @@ namespace Ricochet.Elements
                 tile => tile.Boundary.Any(
                     wall => Geometry.GetIntersection(trajectory, wall) != null));
 
-            if (collision) _changeY += ChangeY * Math.Min(ticks, MaxBounceMultiplier);
+            if (collision)
+            {
+                _changeX += ChangeX * Math.Min((_rightArrowTicks ?? 0) - (_leftArrowTicks ?? 0), MaxBounceMultiplier);
+                _changeY += ChangeY * Math.Min(_downArrowTicks ?? 0, MaxBounceMultiplier);
+
+                _leftArrowTicks = null;
+                _rightArrowTicks = null;
+                _downArrowTicks = null;
+            }
         }
 
         protected override void UpdatePosition()
@@ -69,8 +108,6 @@ namespace Ricochet.Elements
                                select new { Tile = tile, Wall = wall, intersection, distance };
             var closest = intersecting.FirstOrDefault();
 
-            var collisionX = false;
-            var collisionY = false;
             if (closest != null)
             {
                 var wall = closest.Wall;
@@ -88,7 +125,8 @@ namespace Ricochet.Elements
                     }
 
                     _changeX = 0;
-                    collisionX = true;
+                    _collisionX = true;
+                    _collisionY = false;
                 }
                 else if (Math.Abs(wall.Y1 - wall.Y2) < FloatTolerance) // horizontal wall
                 {
@@ -102,7 +140,8 @@ namespace Ricochet.Elements
                     }
 
                     _changeY = 0;
-                    collisionY = true;
+                    _collisionX = false;
+                    _collisionY = true;
                 }
                 else // diagonal wall
                 {
@@ -135,15 +174,20 @@ namespace Ricochet.Elements
 
                     _changeX = 0;
                     _changeY = 0;
-                    collisionX = true;
-                    collisionY = true;
+                    _collisionX = true;
+                    _collisionY = true;
                 }
+            }
+            else
+            {
+                _collisionX = false;
+                _collisionY = false;
             }
 
             // If no collision, move ball normally
-            if (!collisionX) X = potentialX;
+            if (!_collisionX) X = potentialX;
 
-            if (!collisionY)
+            if (!_collisionY)
                 Y = potentialY;
             else
                 _changeX /= Friction;
