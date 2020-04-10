@@ -9,7 +9,7 @@ namespace Klotski.Elements
         public int X { get; private set; }
         public int Y { get; private set; }
 
-        public const int TileDimension = 100;
+        public const int TileDimension = 70;
 
         private Texture2D _texture;
         protected Rectangle Position;
