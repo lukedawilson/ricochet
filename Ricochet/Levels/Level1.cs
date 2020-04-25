@@ -28,67 +28,67 @@ namespace Ricochet.Levels
             AddScreen(
                 "LLTT",
                 LightBlueMappings,
-                @"CCCCCC    CCCCCCCCCCCCCCCC",
-                @"CCCC      CC            PP",
-                @"CC        CC      CCCCCCCC",
-                @"PP        CC            CC",
-                @"PP        CCCCCCCC      CC",
-                @"CC                      CC",
-                @"CCCC                  CCCC",
-                @"CCCCCC              CCCCCC",
-                @"CCCCCCCCCCCCCCCCCCCCPPPPPP"
+                @"CC                        ",
+                @"CC                        ",
+                @"CC                        ",
+                @"CC                        ",
+                @"CC                        ",
+                @"CCCCCC    CCCC    CCCC    ",
+                @"CC                CCCC    ",
+                @"CC  CCCCCC                ",
+                @"CC                        "
             );
             AddScreen(
                 "LTT",
                 LightBlueMappings,
-                @"CCCCCC    CCCCCCCCCCCCCCCC",
-                @"CCCC      CC            PP",
-                @"CC        CC      CCCCCCCC",
-                @"PP        CC            CC",
-                @"PP        CCCCCCCC      CC",
-                @"CC                      CC",
-                @"CCCC                  CCCC",
-                @"CCCCCC              CCCCCC",
-                @"CCCCCCCCCCCCCCCCCCCCPPPPPP"
+                @"                          ",
+                @"                          ",
+                @"                          ",
+                @"                          ",
+                @"                          ",
+                @"    CCCC        /CCCCCCCCC",
+                @"    CCCC      /CCCCCCCCCCC",
+                @"            /CCCCCCCCCCCCC",
+                @"          /CCCCCCCCCPPPPPP"
             );
             AddScreen(
                 "TT",
                 LightBlueMappings,
-                @"CCCCCC    CCCCCCCCCCCCCCCC",
-                @"CCCC      CC            PP",
-                @"CC        CC      CCCCCCCC",
-                @"PP        CC            CC",
-                @"PP        CCCCCCCC      CC",
-                @"CC                      CC",
+                @"                          ",
+                @"        CCCCCCCCCC        ",
+                @"                  CC      ",
+                @"  /CC/              CC    ",
+                @"  CC    \CCCCCCC      CC  ",
                 @"CCCC                  CCCC",
-                @"CCCCCC              CCCCCC",
-                @"CCCCCCCCCCCCCCCCCCCCPPPPPP"
+                @"CC                \CCCCCCC",
+                @"CC                  CCCCCC",
+                @"CC    CCCCCCCCCCCCCCPPPPPP"
             );
             AddScreen(
                 "RTT",
                 LightBlueMappings,
-                @"CCCCCC    CCCCCCCCCCCCCCCC",
-                @"CCCC      CC            PP",
-                @"CC        CC      CCCCCCCC",
-                @"PP        CC            CC",
-                @"PP        CCCCCCCC      CC",
-                @"CC                      CC",
-                @"CCCC                  CCCC",
-                @"CCCCCC              CCCCCC",
-                @"CCCCCCCCCCCCCCCCCCCCPPPPPP"
+                @"                          ",
+                @"                          ",
+                @"                          ",
+                @"                          ",
+                @"                          ",
+                @"CCCCCCCCCCCCCCCCCC    CCCC",
+                @"    CCCCCCCCCCCCCC    CCCC",
+                @"CC                  /CC/  ",
+                @"CC                /CC/    "
             );
             AddScreen(
                 "RRTT",
                 LightBlueMappings,
-                @"CCCCCC    CCCCCCCCCCCCCCCC",
-                @"CCCC      CC            PP",
-                @"CC        CC      CCCCCCCC",
-                @"PP        CC            CC",
-                @"PP        CCCCCCCC      CC",
-                @"CC                      CC",
-                @"CCCC                  CCCC",
-                @"CCCCCC              CCCCCC",
-                @"CCCCCCCCCCCCCCCCCCCCPPPPPP"
+                @"                        CC",
+                @"                        CC",
+                @"                    CCCCCC",
+                @"                        CC",
+                @"                        CC",
+                @"CCCCCCCCCCCCCCCC      CCCC",
+                @"CCCCCCCCCCCCCCCC      CCCC",
+                @"                        CC",
+                @"                        CC"
             );
             AddScreen(
                 "LLT",
@@ -106,9 +106,9 @@ namespace Ricochet.Levels
             AddScreen(
                 "LT",
                 LightBlueMappings,
-                @"        BBCCCCCCCCCCCCCCCC",
+                @"        /BCCCCCCCCCCCCCCCC",
                 @"        BB              CC",
-                @"      /BB/    CC  CCCCCCCC",
+                @"      /BB/    CC    CCCCCC",
                 @"    /BB/      CC        CC",
                 @"    BB    CCCCCCCCCCCCCCCC",
                 @"    BB                  CC",
@@ -119,10 +119,10 @@ namespace Ricochet.Levels
             AddScreen(
                 "T",
                 LightBlueMappings,
-                @"CC    CCCCCCCC  CCCCCCCCCC",
+                @"CC    \CCCCCCC  CCCCCCCCCC",
                 @"CC          CC            ",
-                @"CCCC        CC      CCCCCC",
-                @"CC          CC    CC      ",
+                @"CCC/        CC      CCCCCC",
+                @"CC    \CCCCCCC    CC      ",
                 @"CC          CC  CC        ",
                 @"CCCCCC      CCCCCC      CC",
                 @"CCCCCCCC              CCCC",
@@ -150,9 +150,9 @@ namespace Ricochet.Levels
                 @"CC          BBBB        PP",
                 @"CC                      PP",
                 @"BB                      PP",
-                @"BB                  BBBBPP",
+                @"B/                  BBBBPP",
                 @"                        PP",
-                @"BBB\                    PP",
+                @"BBBBB\                  PP",
                 @"BBBBBBBBBBBBBBBBBBBBBBBBBB"
             );
             AddScreen(
@@ -185,52 +185,52 @@ namespace Ricochet.Levels
                 "M",
                 LightBlueMappings,
                 @"CCCCPPCCCCCC    BBBBBBBBBB",
-                @"    CC              \BBBBB",
-                @"                      \BBB",
+                @"    CC          CC  \BBBBB",
+                @"              CCCC    \BBB",
                 @"                          ",
                 @"            NN            ",
-                @"    CCCCCCCCCC    BBB\    ",
+                @"    CCCCCCCCCC      B\    ",
                 @"    CC            BBBBBBBB",
-                @"CCCCCC          /BBBBBBBBB",
+                @"CCCCCC          BBBBBBBBBB",
                 @"PPPPCC    BBBBBBBBBBBBBBBB"
             );
             AddScreen(
                 "R",
                 LightBlueMappings,
                 @"CCCCCCCCCCCCCCCCCCCCCCCCCC",
-                @"CC                      PP",
+                @"CC                        ",
                 @"CC            CCCCCCCCCCCC",
-                @"            CCCCCCCC      ",
-                @"          CCCCCCCC    CCCC",
-                @"      CC  CCCCCCCC        ",
-                @"CCCCCCCCCCCC          CCCC",
-                @"PPPPCC              CCCCCC",
-                @"PPPPCC  CCCCCCCCCCCCCCPPPP"
+                @"            CCC/          ",
+                @"          CCC/  /CCCCCCCCC",
+                @"      CC  C/              ",
+                @"CCCCCCCCC/  /CCCCCCC  CCCC",
+                @"PPPPCCC/  /C          CCCC",
+                @"PPPPCC  /CCCCCCCCCCCCCPPPP"
             );
             AddScreen(
                 "RR",
                 LightBlueMappings,
-                @"CCPPCCCCCCCCCC  CCCCCCCCCC",
-                @"CC          CC            ",
-                @"CC          CC      CCCCCC",
-                @"CC          CC    CC    PP",
-                @"CC          CC  CC      PP",
-                @"CCCCCC      CCCCCC      CC",
-                @"CCCCCCCC              CCCC",
-                @"PP                  CCCCCC",
-                @"CCCCCCCCCCCC    CCCCCCCCCC"
+                @"CCPPCCCCCCCCCCCCCCCCCCCCCC",
+                @"                        CC",
+                @"CCCCCCCCCCCCCCCC    CCCCCC",
+                @"                  CCC/  PP",
+                @"CCCCCCCCCCCCCC          PP",
+                @"            CCCCCCCCCCCCCC",
+                @"CC                      CC",
+                @"CC                  CC  CC",
+                @"CCCCCCCCCCCCCCCCCCCCCC  CC"
             );
             AddScreen(
                 "LLB",
                 LightBlueMappings,
                 @"SS        SSSSSSSSSSSSSSSS",
                 @"SS          CCCCCCCCCCCCCC",
-                @"SS                  CCCCCC",
-                @"SS          /CCCCC  CCCCCC",
+                @"SSSS                CCCCCC",
+                @"SSSSSS      /CCC    CCCCCC",
+                @"SS          CCCC        CC",
                 @"SS          CCCCCC      CC",
-                @"SS          CCCCCCCC    CC",
-                @"SSSSSSSSSSSSSSSSSSSS  SSSS",
-                @"SSSSSSSSSSSSSSSS      SSSS",
+                @"SSSSSSSSSSSSSSSSSSSS    SS",
+                @"SSSSSSSSSSSSSSSS        SS",
                 @"SSSSSSSSSSSSSSSS    SSSSSS"
             );
             AddScreen(
@@ -251,10 +251,10 @@ namespace Ricochet.Levels
                 LightBlueMappings,
                 @"CCCCCC    CCCCCCCCCCCCCCCC",
                 @"CCCC      CC              ",
-                @"CC        CC      CCCCCCCC",
+                @"CC      CCCC      CCCCCCCC",
                 @"          CC            CC",
                 @"CC        CCCCCCCC      CC",
-                @"CC                      CC",
+                @"CCCC                    CC",
                 @"CCCCCCCCCCCCCCCCCCCCCCCCCC",
                 @"CCCCCC            CCCCCCCC",
                 @"CCCCCC    CCCC    CCPPPPPP"
@@ -269,8 +269,8 @@ namespace Ricochet.Levels
                 @"CCCCCCCCCCCC        /CCCCC",
                 @"CCCCCC        CCCCCCCCCCCC",
                 @"CCCC          CC          ",
-                @"CCCC  CCCCCCCCCC  CCCCCCCC",
-                @"CCCC  CCCCCCCCCC  CCPPPPPP"
+                @"CCCC    CCCCCCCC  CCCCCCCC",
+                @"CCCC    CCCCCCCC  CCPPPPPP"
             );
             AddScreen(
                 "RRB",
@@ -327,12 +327,12 @@ namespace Ricochet.Levels
             AddScreen(
                 "RBB",
                 LightBlueMappings,
-                @"CCCC  CC  CCCC    CCCCCCCC",
-                @"CCCC  CC  CC            CC",
-                @"      CC  CC      CCCCCCCC",
+                @"CCCC    CCCCCC    CCCCCCCC",
+                @"CCC/    CCCC            CC",
+                @"        CCCC      CCCCCCC/",
                 @"CCCCCCCCCC      CC        ",
-                @"            CCCCCC      CC",
-                @"            CC    CC    CC",
+                @"            /CCCCC      CC",
+                @"            CCC/\CCC    CC",
                 @"CCCC    CCCC          CCCC",
                 @"CCCCCC              CCCCCC",
                 @"CCCCCCCCCCCCCCCCCCCCPPPPPP"
@@ -342,12 +342,12 @@ namespace Ricochet.Levels
                 LightBlueMappings,
                 @"CCCCCCCCCCCCCCCCCCCCCC  CC",
                 @"CC                  CC  PP",
-                @"CC          CCCCCCCCCC  CC",
+                @"            CCCCCCCCCC  CC",
                 @"          CC            CC",
-                @"CC  CC    CCCCCCCCCC    CC",
-                @"CC  CC                  CC",
+                @"CC        CCCCCCCCCC    CC",
+                @"CC  /CC\                CC",
                 @"CCCCCCCC              CCCC",
-                @"CCCCCCCC            CCCCCC",
+                @"CCCCCCCCCC          CCCCCC",
                 @"CCCCCCCCCCCCCCCCCCCCPPPPPP"
             );
 
